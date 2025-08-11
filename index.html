@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Playwright Codegen Agent Test</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#131a33;
+      --panel-2:#0f162c;
+      --text:#e9eefb;
+      --muted:#a9b4d6;
+      --accent:#6ea8fe;
+      --accent-2:#4acb7a;
+      --danger:#ff6b6b;
+      --border:#243055;
+      --shadow:0 6px 24px rgba(0,0,0,.35);
+      --radius:12px;
+      --radius-sm:8px;
+      --radius-lg:16px;
+      --gap:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:linear-gradient(180deg,#0a0f1d 0%, #0c1430 100%);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans",sans-serif}
+    a{color:var(--accent);text-decoration:none}
+    button{font:inherit}
+    .chip{display:inline-block;padding:.15rem .5rem;border-radius:999px;background:#1e2b57;color:#cfe0ff;border:1px solid #2a3a73}
+
+    /* Layout */
+    header{
+      position:sticky;top:0;z-index:50;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 14px;background:rgba(10,16,36,.75);backdrop-filter:saturate(140%) blur(8px);
+      border-bottom:1px solid var(--border);
+    }
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{
+      width:28px;height:28px;border-radius:8px;
+      background:conic-gradient(from 180deg,#3b80ff,#6ee7a6,#b388ff,#3b80ff);
+      box-shadow:0 0 0 2px rgba(255,255,255,.06) inset, 0 8px 20px rgba(62,132,255,.25);
+    }
+    .brand h1{font-size:16px;margin:0;font-weight:600;letter-spacing:.2px}
+    .brand small{color:var(--muted)}
+    .right{
+      display:flex;align-items:center;gap:10px
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 14px;border-radius:10px;border:1px solid var(--border);
+      color:var(--text);background:linear-gradient(180deg,#111936,#0e1530);
+      box-shadow:var(--shadow);cursor:pointer;transition:.2s transform,.2s opacity,.2s background;
+      user-select:none
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(180deg,#2a5fff,#1a47d8);border-color:#2851e6}
+    .btn.success{background:linear-gradient(180deg,#2fb570,#1f995b);border-color:#1c874f}
+    .btn.danger{background:linear-gradient(180deg,#f06b6b,#da5252);border-color:#c63d3d}
+    .user-pill{padding:8px 12px;border:1px dashed var(--border);border-radius:999px;color:var(--muted)}
+    .container{
+      display:grid;grid-template-columns:260px 1fr;gap:16px;max-width:1200px;margin:20px auto;padding:0 14px;
+    }
+    aside{
+      background:linear-gradient(180deg,#121a33,#10172f);border:1px solid var(--border);
+      border-radius:var(--radius-lg);padding:12px;box-shadow:var(--shadow);height:max-content;position:sticky;top:76px
+    }
+    .nav{
+      display:flex;flex-direction:column;gap:8px
+    }
+    .tab{
+      width:100%;text-align:left;padding:12px;border-radius:10px;border:1px solid var(--border);
+      background:linear-gradient(180deg,#0f1730,#0d142a);color:var(--text);cursor:pointer;transition:.2s transform,.2s background
+    }
+    .tab.active{background:linear-gradient(180deg,#193062,#182b55);border-color:#2b427a}
+    main{
+      background:linear-gradient(180deg,#121a33,#10172f);border:1px solid var(--border);
+      border-radius:var(--radius-lg);padding:16px;box-shadow:var(--shadow);min-height:520px
+    }
+    .section{display:none}
+    .section.active{display:block}
+    h2{margin:.25rem 0 1rem 0;font-size:20px}
+    .grid{
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px
+    }
+    .field{
+      display:flex;flex-direction:column;gap:8px;background:linear-gradient(180deg,#0e152d,#0c1226);
+      border:1px solid var(--border);border-radius:10px;padding:12px
+    }
+    label{font-size:13px;color:#c8d2f4}
+    input,select,textarea{
+      width:100%;padding:10px 12px;border-radius:8px;border:1px solid #2a3766;background:#0b1228;color:var(--text)
+    }
+    textarea{min-height:84px;resize:vertical}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .muted{color:var(--muted)}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,#2a3766,transparent);margin:16px 0}
+
+    /* Modals */
+    .modal-backdrop{
+      position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:100
+    }
+    .modal{width:100%;max-width:520px;background:linear-gradient(180deg,#121a33,#10172f);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:16px}
+    .modal h3{margin:.25rem 0 12px 0}
+    .modal.show{display:flex}
+    .tabs{display:flex;gap:8px;margin-bottom:8px}
+    .seg{
+      flex:1;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--border);background:#0e1530;color:var(--text);cursor:pointer
+    }
+    .seg.active{background:#1b2d62;border-color:#2e4792}
+
+    /* Table Results */
+    table{width:100%;border-collapse:separate;border-spacing:0 8px}
+    th,td{padding:10px 12px;text-align:left;border:1px solid #253364;background:#0d1430}
+    th:first-child,td:first-child{border-top-left-radius:8px;border-bottom-left-radius:8px}
+    th:last-child,td:last-child{border-top-right-radius:8px;border-bottom-right-radius:8px}
+    th{background:#152453}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .container{grid-template-columns:1fr}
+      aside{position:relative;top:0}
+      .nav{flex-direction:row}
+      .tab{flex:1;text-align:center}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>Playwright Codegen Agent Test</h1>
+        <small class="muted">Static demo site for automation script generation</small>
+      </div>
+    </div>
+    <div class="right">
+      <span id="userPill" class="user-pill" data-testid="user-display" aria-live="polite">Signed out</span>
+      <button class="btn" id="btnAuth" data-testid="btn-auth" aria-haspopup="dialog" aria-controls="authModal">Register / Login</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside>
+      <div class="nav" role="tablist" aria-label="Main sections">
+        <button class="tab active" id="tabFlow" role="tab" aria-selected="true" aria-controls="panelFlow" data-testid="tab-flow">Flow Entry</button>
+        <button class="tab" id="tabParams" role="tab" aria-selected="false" aria-controls="panelParams" data-testid="tab-params">Parameter Settings</button>
+        <button class="tab" id="tabResults" role="tab" aria-selected="false" aria-controls="panelResults" data-testid="tab-results">Submission Results</button>
+      </div>
+    </aside>
+
+    <main>
+      <!-- Flow Entry -->
+      <section class="section active" id="panelFlow" role="tabpanel" aria-labelledby="tabFlow">
+        <h2>Flow Entry</h2>
+        <p class="muted">Fill all fields below, then click Save.</p>
+        <div class="grid">
+          <div class="field">
+            <label for="flow1">Request Title</label>
+            <input id="flow1" data-testid="flow-field-1" placeholder="Enter a concise title" required />
+          </div>
+          <div class="field">
+            <label for="flow2">Request Type</label>
+            <select id="flow2" data-testid="flow-field-2" required>
+              <option value="">Select type…</option>
+              <option>Onboarding</option>
+              <option>Offboarding</option>
+              <option>Access</option>
+              <option>Purchase</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="flow3">Department</label>
+            <select id="flow3" data-testid="flow-field-3" required>
+              <option value="">Select department…</option>
+              <option>Engineering</option>
+              <option>Sales</option>
+              <option>HR</option>
+              <option>Finance</option>
+              <option>IT</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="flow4">Assignee</label>
+            <input id="flow4" data-testid="flow-field-4" placeholder="e.g., Jane Doe" required />
+          </div>
+          <div class="field">
+            <label for="flow5">Start Date</label>
+            <input id="flow5" type="date" data-testid="flow-field-5" required />
+          </div>
+          <div class="field">
+            <label for="flow6">End Date</label>
+            <input id="flow6" type="date" data-testid="flow-field-6" required />
+          </div>
+          <div class="field">
+            <label for="flow7">Priority</label>
+            <select id="flow7" data-testid="flow-field-7" required>
+              <option value="">Select priority…</option>
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+              <option>Critical</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="flow8">Environment</label>
+            <select id="flow8" data-testid="flow-field-8" required>
+              <option value="">Select environment…</option>
+              <option>DEV</option>
+              <option>QA</option>
+              <option>STAGE</option>
+              <option>PROD</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="flow9">Requires Manager Approval</label>
+            <select id="flow9" data-testid="flow-field-9" required>
+              <option value="">Select…</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="field" style="grid-column:1/-1">
+            <label for="flow10">Description</label>
+            <textarea id="flow10" data-testid="flow-field-10" placeholder="Provide details…" required></textarea>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn success" id="btnSaveFlow" data-testid="btn-save-flow">Save</button>
+        </div>
+      </section>
+
+      <!-- Parameter Settings -->
+      <section class="section" id="panelParams" role="tabpanel" aria-labelledby="tabParams">
+        <h2>Parameter Settings</h2>
+        <p class="muted">Provide numeric and selectable parameters, then click Save and Submit.</p>
+        <div class="grid">
+          <div class="field">
+            <label for="param1">Max Retries (0–10)</label>
+            <input id="param1" type="number" min="0" max="10" step="1" data-testid="param-field-1" placeholder="e.g., 3" required />
+          </div>
+          <div class="field">
+            <label for="param2">Timeout (ms)</label>
+            <input id="param2" type="number" min="0" step="100" data-testid="param-field-2" placeholder="e.g., 10000" required />
+          </div>
+          <div class="field">
+            <label for="param3">Batch Size</label>
+            <input id="param3" type="number" min="1" step="1" data-testid="param-field-3" placeholder="e.g., 50" required />
+          </div>
+          <div class="field">
+            <label for="param4">Threshold (%)</label>
+            <input id="param4" type="number" min="0" max="100" step="1" data-testid="param-field-4" placeholder="e.g., 80" required />
+          </div>
+          <div class="field">
+            <label for="param5">Parallel Workers</label>
+            <select id="param5" data-testid="param-field-5" required>
+              <option value="">Select…</option>
+              <option>1</option><option>2</option><option>3</option><option>4</option>
+              <option>5</option><option>6</option><option>7</option><option>8</option>
+              <option>9</option><option>10</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="param6">Region Code</label>
+            <select id="param6" data-testid="param-field-6" required>
+              <option value="">Select…</option>
+              <option>1</option><option>2</option><option>3</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="param7">Retry Backoff (ms)</label>
+            <input id="param7" type="number" min="0" step="100" data-testid="param-field-7" placeholder="e.g., 2000" required />
+          </div>
+          <div class="field">
+            <label for="param8">Alert Level</label>
+            <select id="param8" data-testid="param-field-8" required>
+              <option value="">Select…</option>
+              <option>0</option><option>1</option><option>2</option><option>3</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="param9">Schedule Hour (0–23)</label>
+            <select id="param9" data-testid="param-field-9" required>
+              <option value="">Select…</option>
+              <script>
+                // populated later by JS to keep HTML tidy
+              </script>
+            </select>
+          </div>
+          <div class="field">
+            <label for="param10">Confirmation Code</label>
+            <input id="param10" type="number" step="1" data-testid="param-field-10" placeholder="e.g., 123456" required />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn success" id="btnSaveParams" data-testid="btn-save-params">Save</button>
+          <button class="btn primary" id="btnSubmit" data-testid="btn-submit">Submit</button>
+        </div>
+        <div class="divider"></div>
+        <p class="muted">Note: If any field is left blank, a message will appear: “Information incomplete, please continue filling”.</p>
+      </section>
+
+      <!-- Submission Results -->
+      <section class="section" id="panelResults" role="tabpanel" aria-labelledby="tabResults">
+        <h2>Submission Results</h2>
+        <p class="muted">See the latest submitted data below.</p>
+        <p><span class="chip">Last submission</span> <span id="resultsTime" data-testid="results-last-submission-time">—</span></p>
+        <div id="resultsContainer" data-testid="results-container"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal-backdrop" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true">
+    <div class="modal">
+      <h3 id="authTitle">Authentication</h3>
+      <div class="tabs" role="tablist" aria-label="Auth tabs">
+        <button class="seg active" id="segRegister" role="tab" aria-selected="true" data-testid="auth-tab-register">Register</button>
+        <button class="seg" id="segLogin" role="tab" aria-selected="false" data-testid="auth-tab-login">Login</button>
+      </div>
+      <div id="panelRegister">
+        <div class="field">
+          <label for="regName">Full Name</label>
+          <input id="regName" data-testid="input-register-name" placeholder="e.g., Alex Smith" />
+        </div>
+        <div class="field">
+          <label for="regEmail">Email</label>
+          <input id="regEmail" type="email" data-testid="input-register-email" placeholder="alex@example.com" />
+        </div>
+        <div class="actions">
+          <button class="btn success" id="btnDoRegister" data-testid="btn-register-submit">Register</button>
+          <button class="btn" id="btnCloseAuth1">Close</button>
+        </div>
+      </div>
+      <div id="panelLogin" style="display:none">
+        <div class="field">
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" type="email" data-testid="input-login-email" placeholder="you@example.com" />
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="btnDoLogin" data-testid="btn-login-submit">Login</button>
+          <button class="btn" id="btnCloseAuth2">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Incomplete Modal -->
+  <div class="modal-backdrop" id="incompleteModal" role="dialog" aria-modal="true" aria-labelledby="incompleteTitle" aria-hidden="true">
+    <div class="modal">
+      <h3 id="incompleteTitle">Information incomplete, please continue filling</h3>
+      <p class="muted">Some required fields are missing. Please complete all fields in “Flow Entry” and “Parameter Settings”.</p>
+      <div id="missingList" style="margin:10px 0;"></div>
+      <div class="actions">
+        <button class="btn" id="btnIncompleteOK" data-testid="btn-incomplete-ok">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal-backdrop" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle" aria-hidden="true">
+    <div class="modal">
+      <h3 id="successTitle">Submission Successful!</h3>
+      <p class="muted">Your data has been saved and submitted.</p>
+      <div class="actions">
+        <button class="btn primary" id="btnSuccessOK" data-testid="btn-success-ok">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Utility: query helpers
+    const $ = (sel, ctx=document)=>ctx.querySelector(sel);
+    const $$ = (sel, ctx=document)=>Array.from(ctx.querySelectorAll(sel));
+
+    // Populate schedule hour options (0-23)
+    (function populateHours(){
+      const sel = $('#param9');
+      if (!sel) return;
+      const frag = document.createDocumentFragment();
+      for(let i=0;i<24;i++){
+        const opt=document.createElement('option');
+        opt.value=String(i); opt.textContent=String(i);
+        frag.appendChild(opt);
+      }
+      sel.appendChild(frag);
+    })();
+
+    // App State
+    const state = {
+      user: null, // { name, email }
+      flow: {},   // fields 1-10
+      params: {}, // fields 1-10
+      submission: null // { flow, params, at }
+    };
+
+    // Persist to localStorage
+    const persist = () => localStorage.setItem('pw-demo-state', JSON.stringify(state));
+    const restore = () => {
+      try {
+        const raw = localStorage.getItem('pw-demo-state');
+        if (!raw) return;
+        const data = JSON.parse(raw);
+        if (data && typeof data === 'object') {
+          Object.assign(state, data);
+        }
+      } catch {}
+    };
+    restore();
+
+    // Tabs
+    const tabs = [
+      {btn: $('#tabFlow'), panel: $('#panelFlow')},
+      {btn: $('#tabParams'), panel: $('#panelParams')},
+      {btn: $('#tabResults'), panel: $('#panelResults')}
+    ];
+    function activateTab(idx){
+      tabs.forEach((t,i)=>{
+        t.btn.classList.toggle('active', i===idx);
+        t.btn.setAttribute('aria-selected', i===idx ? 'true' : 'false');
+        t.panel.classList.toggle('active', i===idx);
+      });
+    }
+    tabs.forEach((t,i)=> t.btn.addEventListener('click', ()=>activateTab(i)));
+
+    // Auth modal
+    const authModal = $('#authModal');
+    const segRegister = $('#segRegister');
+    const segLogin = $('#segLogin');
+    const panelRegister = $('#panelRegister');
+    const panelLogin = $('#panelLogin');
+    const btnAuth = $('#btnAuth');
+
+    function openModal(el){
+      el.classList.add('show');
+      el.setAttribute('aria-hidden','false');
+    }
+    function closeModal(el){
+      el.classList.remove('show');
+      el.setAttribute('aria-hidden','true');
+    }
+
+    btnAuth.addEventListener('click', ()=> openModal(authModal));
+    $('#btnCloseAuth1').addEventListener('click', ()=> closeModal(authModal));
+    $('#btnCloseAuth2').addEventListener('click', ()=> closeModal(authModal));
+
+    segRegister.addEventListener('click', ()=>{
+      segRegister.classList.add('active'); segRegister.setAttribute('aria-selected','true');
+      segLogin.classList.remove('active'); segLogin.setAttribute('aria-selected','false');
+      panelRegister.style.display='block'; panelLogin.style.display='none';
+    });
+    segLogin.addEventListener('click', ()=>{
+      segLogin.classList.add('active'); segLogin.setAttribute('aria-selected','true');
+      segRegister.classList.remove('active'); segRegister.setAttribute('aria-selected','false');
+      panelRegister.style.display='none'; panelLogin.style.display='block';
+    });
+
+    // Auth actions
+    const userPill = $('#userPill');
+    function updateUserUI(){
+      if(state.user){
+        userPill.textContent = `Signed in as ${state.user.name}`;
+        btnAuth.textContent = 'Sign out';
+        btnAuth.classList.add('danger');
+        btnAuth.onclick = ()=>{ state.user=null; persist(); updateUserUI(); };
+      }else{
+        userPill.textContent = 'Signed out';
+        btnAuth.textContent = 'Register / Login';
+        btnAuth.classList.remove('danger');
+        btnAuth.onclick = ()=> openModal(authModal);
+      }
+    }
+    updateUserUI();
+
+    $('#btnDoRegister').addEventListener('click', ()=>{
+      const name = $('#regName').value.trim();
+      const email = $('#regEmail').value.trim();
+      if(!name || !email){ alert('Please provide name and email.'); return; }
+      state.user = { name, email };
+      persist();
+      updateUserUI();
+      closeModal(authModal); // auto-login after register
+    });
+
+    $('#btnDoLogin').addEventListener('click', ()=>{
+      const email = $('#loginEmail').value.trim();
+      if(!email){ alert('Please provide email.'); return; }
+      // Simple demo: infer a display name from email
+      const name = email.split('@')[0] || 'User';
+      state.user = { name, email };
+      persist();
+      updateUserUI();
+      closeModal(authModal);
+    });
+
+    // Load existing form values (if any)
+    function setVal(id, val){
+      const el = document.getElementById(id);
+      if(el && val!=null){ el.value = val; }
+    }
+    // Flow fields
+    const flowIds = ['flow1','flow2','flow3','flow4','flow5','flow6','flow7','flow8','flow9','flow10'];
+    // Params fields
+    const paramIds = ['param1','param2','param3','param4','param5','param6','param7','param8','param9','param10'];
+
+    function loadForms(){
+      flowIds.forEach(id => setVal(id, state.flow[id]));
+      paramIds.forEach(id => setVal(id, state.params[id]));
+    }
+    loadForms();
+
+    // Save actions
+    $('#btnSaveFlow').addEventListener('click', ()=>{
+      const F = {};
+      let ok=true;
+      flowIds.forEach(id=>{
+        const v = (document.getElementById(id).value||'').trim();
+        F[id]=v;
+        if(!v) ok=false;
+      });
+      state.flow = F;
+      persist();
+      alert(ok ? 'Flow saved successfully.' : 'Flow saved (some fields are empty).');
+    });
+
+    $('#btnSaveParams').addEventListener('click', ()=>{
+      const P = {};
+      let ok=true;
+      paramIds.forEach(id=>{
+        const v = (document.getElementById(id).value||'').trim();
+        P[id]=v;
+        if(!v) ok=false;
+      });
+      state.params = P;
+      persist();
+      alert(ok ? 'Parameters saved successfully.' : 'Parameters saved (some fields are empty).');
+    });
+
+    // Submit
+    const incompleteModal = $('#incompleteModal');
+    const successModal = $('#successModal');
+    const missingList = $('#missingList');
+
+    function gatherMissing(){
+      const missing = [];
+      flowIds.forEach((id,idx)=>{
+        const el = document.getElementById(id);
+        if(!el.value || String(el.value).trim()===''){
+          missing.push(`Flow Entry #${idx+1} (${el.previousElementSibling?.textContent || id})`);
+        }
+      });
+      paramIds.forEach((id,idx)=>{
+        const el = document.getElementById(id);
+        if(!el.value || String(el.value).trim()===''){
+          missing.push(`Parameter Settings #${idx+1} (${el.previousElementSibling?.textContent || id})`);
+        }
+      });
+      return missing;
+    }
+
+    $('#btnSubmit').addEventListener('click', ()=>{
+      const missing = gatherMissing();
+      if(missing.length){
+        // Show incomplete modal with list
+        missingList.innerHTML = `<ul>` + missing.map(m=>`<li>${m}</li>`).join('') + `</ul>`;
+        openModal(incompleteModal);
+        return;
+      }
+      // Save current form values to state before submission
+      state.flow = Object.fromEntries(flowIds.map(id=>[id, document.getElementById(id).value.trim()]));
+      state.params = Object.fromEntries(paramIds.map(id=>[id, document.getElementById(id).value.trim()]));
+      state.submission = { flow: {...state.flow}, params: {...state.params}, at: new Date().toISOString() };
+      persist();
+      renderResults();
+      openModal(successModal);
+    });
+
+    $('#btnIncompleteOK').addEventListener('click', ()=> closeModal(incompleteModal));
+    $('#btnSuccessOK').addEventListener('click', ()=> closeModal(successModal));
+
+    // Render results
+    function renderResults(){
+      const out = $('#resultsContainer');
+      const time = $('#resultsTime');
+      out.innerHTML = '';
+      if(!state.submission){
+        time.textContent = '—';
+        out.innerHTML = '<p class="muted">No submissions yet.</p>';
+        return;
+      }
+      const at = new Date(state.submission.at);
+      time.textContent = at.toLocaleString();
+      const tbl = document.createElement('table');
+      const thead = document.createElement('thead');
+      thead.innerHTML = '<tr><th>Field</th><th>Value</th></tr>';
+      tbl.appendChild(thead);
+      const tbody = document.createElement('tbody');
+
+      const labelsFlow = [
+        'Request Title','Request Type','Department','Assignee','Start Date',
+        'End Date','Priority','Environment','Requires Manager Approval','Description'
+      ];
+      const labelsParam = [
+        'Max Retries','Timeout (ms)','Batch Size','Threshold (%)','Parallel Workers',
+        'Region Code','Retry Backoff (ms)','Alert Level','Schedule Hour','Confirmation Code'
+      ];
+
+      // Flow rows
+      flowIds.forEach((id, idx)=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>Flow: ${labelsFlow[idx]}</td><td>${escapeHtml(state.submission.flow[id]||'')}</td>`;
+        tbody.appendChild(tr);
+      });
+      // Param rows
+      paramIds.forEach((id, idx)=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>Param: ${labelsParam[idx]}</td><td>${escapeHtml(state.submission.params[id]||'')}</td>`;
+        tbody.appendChild(tr);
+      });
+      tbl.appendChild(tbody);
+      out.appendChild(tbl);
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#39;');
+    }
+
+    // Initial render of results (if any)
+    renderResults();
+
+    // Keyboard handling: close modals on backdrop click or Escape
+    [authModal, incompleteModal, successModal].forEach(mod=>{
+      mod.addEventListener('click', (e)=>{ if(e.target === mod) closeModal(mod); });
+    });
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape'){
+        [authModal, incompleteModal, successModal].forEach(m=>{
+          if(m.classList.contains('show')) closeModal(m);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
