@@ -95,18 +95,14 @@
     .muted{color:var(--muted)}
     .divider{height:1px;background:linear-gradient(90deg,transparent,#2a3766,transparent);margin:16px 0}
 
-    /* Modals */
-    .modal-backdrop{
-      position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:100
+    /* Inline notes */
+    .note{
+      margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+      background:#0d1430;font-size:14px
     }
-    .modal{width:100%;max-width:520px;background:linear-gradient(180deg,#121a33,#10172f);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:16px}
-    .modal h3{margin:.25rem 0 12px 0}
-    .modal.show{display:flex}
-    .tabs{display:flex;gap:8px;margin-bottom:8px}
-    .seg{
-      flex:1;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--border);background:#0e1530;color:var(--text);cursor:pointer
-    }
-    .seg.active{background:#1b2d62;border-color:#2e4792}
+    .note.success{border-color:#2f9e6b;background:rgba(36, 158, 107, 0.15);color:#d7ffea}
+    .note.error{border-color:#c63d3d;background:rgba(198, 61, 61, 0.15);color:#ffd7d7}
+    .note.info{border-color:#2851e6;background:rgba(40, 81, 230, 0.15);color:#dee6ff}
 
     /* Table Results */
     table{width:100%;border-collapse:separate;border-spacing:0 8px}
@@ -228,6 +224,7 @@
         <div class="actions">
           <button class="btn success" id="btnSaveFlow" data-testid="btn-save-flow">Save</button>
         </div>
+        <div id="noteFlow" class="note" style="display:none" data-testid="msg-flow-save" aria-live="polite"></div>
       </section>
 
       <!-- Parameter Settings -->
@@ -296,6 +293,8 @@
           <button class="btn success" id="btnSaveParams" data-testid="btn-save-params">Save</button>
           <button class="btn primary" id="btnSubmit" data-testid="btn-submit">Submit</button>
         </div>
+        <div id="noteParams" class="note" style="display:none" data-testid="msg-params-save" aria-live="polite"></div>
+        <div id="noteSubmit" class="note" style="display:none" data-testid="msg-submit" aria-live="polite"></div>
         <div class="divider"></div>
         <p class="muted">Note: If any field is left blank, a message will appear: “Information incomplete, please continue filling”.</p>
       </section>
@@ -303,77 +302,76 @@
       <!-- Submission Results -->
       <section class="section" id="panelResults" role="tabpanel" aria-labelledby="tabResults">
         <h2>Submission Results</h2>
-        <p class="muted">See the latest submitted data below.</p>
-        <p><span class="chip">Last submission</span> <span id="resultsTime" data-testid="results-last-submission-time">—</span></p>
+        <p class="muted">Latest 5 submissions from Google Sheets.</p>
+        <p><span class="chip" id="resultsSource" data-testid="results-source">Loading…</span></p>
         <div id="resultsContainer" data-testid="results-container"></div>
       </section>
     </main>
   </div>
 
   <!-- Auth Modal -->
-  <div class="modal-backdrop" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true">
-    <div class="modal">
-      <h3 id="authTitle">Authentication</h3>
-      <div class="tabs" role="tablist" aria-label="Auth tabs">
-        <button class="seg active" id="segRegister" role="tab" aria-selected="true" data-testid="auth-tab-register">Register</button>
-        <button class="seg" id="segLogin" role="tab" aria-selected="false" data-testid="auth-tab-login">Login</button>
-      </div>
-      <div id="panelRegister">
-        <div class="field">
-          <label for="regName">Full Name</label>
-          <input id="regName" data-testid="input-register-name" placeholder="e.g., Alex Smith" />
-        </div>
-        <div class="field">
-          <label for="regEmail">Email</label>
-          <input id="regEmail" type="email" data-testid="input-register-email" placeholder="alex@example.com" />
-        </div>
-        <div class="actions">
-          <button class="btn success" id="btnDoRegister" data-testid="btn-register-submit">Register</button>
-          <button class="btn" id="btnCloseAuth1">Close</button>
-        </div>
-      </div>
-      <div id="panelLogin" style="display:none">
-        <div class="field">
-          <label for="loginEmail">Email</label>
-          <input id="loginEmail" type="email" data-testid="input-login-email" placeholder="you@example.com" />
-        </div>
-        <div class="actions">
-          <button class="btn primary" id="btnDoLogin" data-testid="btn-login-submit">Login</button>
-          <button class="btn" id="btnCloseAuth2">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Incomplete Modal -->
-  <div class="modal-backdrop" id="incompleteModal" role="dialog" aria-modal="true" aria-labelledby="incompleteTitle" aria-hidden="true">
-    <div class="modal">
-      <h3 id="incompleteTitle">Information incomplete, please continue filling</h3>
-      <p class="muted">Some required fields are missing. Please complete all fields in “Flow Entry” and “Parameter Settings”.</p>
-      <div id="missingList" style="margin:10px 0;"></div>
-      <div class="actions">
-        <button class="btn" id="btnIncompleteOK" data-testid="btn-incomplete-ok">OK</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Success Modal -->
-  <div class="modal-backdrop" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle" aria-hidden="true">
-    <div class="modal">
-      <h3 id="successTitle">Submission Successful!</h3>
-      <p class="muted">Your data has been saved and submitted.</p>
-      <div class="actions">
-        <button class="btn primary" id="btnSuccessOK" data-testid="btn-success-ok">OK</button>
-      </div>
-    </div>
-  </div>
-
+  <div class="modal-backdrop" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true" style="display:none"></div>
+  <!-- 简化：保留登录逻辑（不影响本次需求），用系统 alert 做最小交互 -->
   <script>
     // Utility: query helpers
     const $ = (sel, ctx=document)=>ctx.querySelector(sel);
     const $$ = (sel, ctx=document)=>Array.from(ctx.querySelectorAll(sel));
 
-    // Populate schedule hour options (0-23)
+    // Backend configuration
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyFBLkQTAeIlWpoMIz--OK6H5A2czk7tYkJp_BA_X81s_AZ2BeO9UNv5nqGDyonmgVx/exec';
+    // 如果你的 Apps Script 已支持 GET ?mode=recent&limit=5 返回 {ok:true, rows:[...]},
+    // 则 recent API 会被使用；否则自动回退到本地缓存。
+    const BACKEND_HAS_RECENT_API_HINT = true;
+
+    // Minimal fake auth: click "Register / Login" toggles signed-in state
+    const userPill = $('#userPill');
+    const btnAuth = $('#btnAuth');
+    let signedIn = false;
+    let state = {
+      user: null,
+      flow: {},
+      params: {},
+      submission: null
+    };
+    const HISTORY_KEY = 'pw-demo-history';
+    const STATE_KEY   = 'pw-demo-state';
+
+    function saveLS(key, obj){ localStorage.setItem(key, JSON.stringify(obj)); }
+    function loadLS(key, def){ try{ const v = JSON.parse(localStorage.getItem(key) || ''); return v ?? def; } catch{ return def; } }
+
+    // Restore state
+    (()=>{
+      const saved = loadLS(STATE_KEY, null);
+      if (saved) state = saved;
+    })();
+
+    function updateUserUI(){
+      if(signedIn && state.user){
+        userPill.textContent = `Signed in as ${state.user.name}`;
+        btnAuth.textContent = 'Sign out';
+        btnAuth.classList.add('danger');
+      }else{
+        userPill.textContent = 'Signed out';
+        btnAuth.textContent = 'Register / Login';
+        btnAuth.classList.remove('danger');
+      }
+    }
+    btnAuth.addEventListener('click', ()=>{
+      if(!signedIn){
+        const name = prompt('Enter your name (for demo login):','User');
+        const email = prompt('Enter your email:','user@example.com');
+        if(name && email){
+          state.user = { name, email }; signedIn = true; persist(); updateUserUI();
+          alert('Signed in.');
+        }
+      }else{
+        signedIn = false; state.user = null; persist(); updateUserUI();
+        alert('Signed out.');
+      }
+    });
+    updateUserUI();
+
+    // Populate hours 0..23
     (function populateHours(){
       const sel = $('#param9');
       if (!sel) return;
@@ -385,28 +383,6 @@
       }
       sel.appendChild(frag);
     })();
-
-    // App State
-    const state = {
-      user: null, // { name, email }
-      flow: {},   // fields 1-10
-      params: {}, // fields 1-10
-      submission: null // { flow, params, at }
-    };
-
-    // Persist to localStorage
-    const persist = () => localStorage.setItem('pw-demo-state', JSON.stringify(state));
-    const restore = () => {
-      try {
-        const raw = localStorage.getItem('pw-demo-state');
-        if (!raw) return;
-        const data = JSON.parse(raw);
-        if (data && typeof data === 'object') {
-          Object.assign(state, data);
-        }
-      } catch {}
-    };
-    restore();
 
     // Tabs
     const tabs = [
@@ -420,96 +396,40 @@
         t.btn.setAttribute('aria-selected', i===idx ? 'true' : 'false');
         t.panel.classList.toggle('active', i===idx);
       });
+      if (idx === 2) { // Results
+        loadRecentSubmissions();
+      }
     }
     tabs.forEach((t,i)=> t.btn.addEventListener('click', ()=>activateTab(i)));
 
-    // Auth modal
-    const authModal = $('#authModal');
-    const segRegister = $('#segRegister');
-    const segLogin = $('#segLogin');
-    const panelRegister = $('#panelRegister');
-    const panelLogin = $('#panelLogin');
-    const btnAuth = $('#btnAuth');
-
-    function openModal(el){
-      el.classList.add('show');
-      el.setAttribute('aria-hidden','false');
+    // Helpers
+    function showNote(el, type, msg){
+      el.classList.remove('success','error','info');
+      el.classList.add('note', type);
+      el.textContent = msg;
+      el.style.display = 'block';
     }
-    function closeModal(el){
-      el.classList.remove('show');
-      el.setAttribute('aria-hidden','true');
-    }
+    function hideNote(el){ el.style.display = 'none'; el.textContent = ''; el.classList.remove('success','error','info'); }
 
-    btnAuth.addEventListener('click', ()=> openModal(authModal));
-    $('#btnCloseAuth1').addEventListener('click', ()=> closeModal(authModal));
-    $('#btnCloseAuth2').addEventListener('click', ()=> closeModal(authModal));
-
-    segRegister.addEventListener('click', ()=>{
-      segRegister.classList.add('active'); segRegister.setAttribute('aria-selected','true');
-      segLogin.classList.remove('active'); segLogin.setAttribute('aria-selected','false');
-      panelRegister.style.display='block'; panelLogin.style.display='none';
-    });
-    segLogin.addEventListener('click', ()=>{
-      segLogin.classList.add('active'); segLogin.setAttribute('aria-selected','true');
-      segRegister.classList.remove('active'); segRegister.setAttribute('aria-selected','false');
-      panelRegister.style.display='none'; panelLogin.style.display='block';
-    });
-
-    // Auth actions
-    const userPill = $('#userPill');
-    function updateUserUI(){
-      if(state.user){
-        userPill.textContent = `Signed in as ${state.user.name}`;
-        btnAuth.textContent = 'Sign out';
-        btnAuth.classList.add('danger');
-        btnAuth.onclick = ()=>{ state.user=null; persist(); updateUserUI(); };
-      }else{
-        userPill.textContent = 'Signed out';
-        btnAuth.textContent = 'Register / Login';
-        btnAuth.classList.remove('danger');
-        btnAuth.onclick = ()=> openModal(authModal);
-      }
-    }
-    updateUserUI();
-
-    $('#btnDoRegister').addEventListener('click', ()=>{
-      const name = $('#regName').value.trim();
-      const email = $('#regEmail').value.trim();
-      if(!name || !email){ alert('Please provide name and email.'); return; }
-      state.user = { name, email };
-      persist();
-      updateUserUI();
-      closeModal(authModal); // auto-login after register
-    });
-
-    $('#btnDoLogin').addEventListener('click', ()=>{
-      const email = $('#loginEmail').value.trim();
-      if(!email){ alert('Please provide email.'); return; }
-      // Simple demo: infer a display name from email
-      const name = email.split('@')[0] || 'User';
-      state.user = { name, email };
-      persist();
-      updateUserUI();
-      closeModal(authModal);
-    });
-
-    // Load existing form values (if any)
     function setVal(id, val){
       const el = document.getElementById(id);
       if(el && val!=null){ el.value = val; }
     }
-    // Flow fields
     const flowIds = ['flow1','flow2','flow3','flow4','flow5','flow6','flow7','flow8','flow9','flow10'];
-    // Params fields
     const paramIds = ['param1','param2','param3','param4','param5','param6','param7','param8','param9','param10'];
 
     function loadForms(){
       flowIds.forEach(id => setVal(id, state.flow[id]));
       paramIds.forEach(id => setVal(id, state.params[id]));
     }
+    function persist(){ saveLS(STATE_KEY, state); }
     loadForms();
 
-    // Save actions
+    // Save buttons -> inline messages
+    const noteFlow = $('#noteFlow');
+    const noteParams = $('#noteParams');
+    const noteSubmit = $('#noteSubmit');
+
     $('#btnSaveFlow').addEventListener('click', ()=>{
       const F = {};
       let ok=true;
@@ -518,9 +438,8 @@
         F[id]=v;
         if(!v) ok=false;
       });
-      state.flow = F;
-      persist();
-      alert(ok ? 'Flow saved successfully.' : 'Flow saved (some fields are empty).');
+      state.flow = F; persist();
+      showNote(noteFlow, ok ? 'success' : 'info', ok ? 'Flow saved successfully.' : 'Flow saved (some fields are empty).');
     });
 
     $('#btnSaveParams').addEventListener('click', ()=>{
@@ -531,94 +450,122 @@
         P[id]=v;
         if(!v) ok=false;
       });
-      state.params = P;
-      persist();
-      alert(ok ? 'Parameters saved successfully.' : 'Parameters saved (some fields are empty).');
+      state.params = P; persist();
+      showNote(noteParams, ok ? 'success' : 'info', ok ? 'Parameters saved successfully.' : 'Parameters saved (some fields are empty).');
     });
-
-    // Submit
-    const incompleteModal = $('#incompleteModal');
-    const successModal = $('#successModal');
-    const missingList = $('#missingList');
 
     function gatherMissing(){
       const missing = [];
       flowIds.forEach((id,idx)=>{
         const el = document.getElementById(id);
         if(!el.value || String(el.value).trim()===''){
-          missing.push(`Flow Entry #${idx+1} (${el.previousElementSibling?.textContent || id})`);
+          missing.push(`Flow Entry #${idx+1}`);
         }
       });
       paramIds.forEach((id,idx)=>{
         const el = document.getElementById(id);
         if(!el.value || String(el.value).trim()===''){
-          missing.push(`Parameter Settings #${idx+1} (${el.previousElementSibling?.textContent || id})`);
+          missing.push(`Parameter Settings #${idx+1}`);
         }
       });
       return missing;
     }
 
-    $('#btnSubmit').addEventListener('click', ()=>{
+    // Submit -> inline success/error + send to Sheets
+    $('#btnSubmit').addEventListener('click', async ()=>{
+      hideNote(noteSubmit);
+
       const missing = gatherMissing();
       if(missing.length){
-        // Show incomplete modal with list
-        missingList.innerHTML = `<ul>` + missing.map(m=>`<li>${m}</li>`).join('') + `</ul>`;
-        openModal(incompleteModal);
+        showNote(noteSubmit, 'error', 'Information incomplete, please continue filling');
         return;
       }
-      // Save current form values to state before submission
+      // assemble payload
       state.flow = Object.fromEntries(flowIds.map(id=>[id, document.getElementById(id).value.trim()]));
       state.params = Object.fromEntries(paramIds.map(id=>[id, document.getElementById(id).value.trim()]));
-      state.submission = { flow: {...state.flow}, params: {...state.params}, at: new Date().toISOString() };
+      const submission = { flow: {...state.flow}, params: {...state.params}, at: new Date().toISOString(), user: state.user };
+      state.submission = submission;
       persist();
-      renderResults();
-      openModal(successModal);
+
+      // Add to local history (for fallback and quick display)
+      const history = loadLS(HISTORY_KEY, []);
+      history.unshift(submission);
+      if (history.length > 50) history.length = 50;
+      saveLS(HISTORY_KEY, history);
+
+      // fire-and-forget POST to Apps Script (using fetch; most Apps Script WebApp 允许 CORS)
+      try{
+        await fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            at: submission.at,
+            user: submission.user,
+            flow: submission.flow,
+            params: submission.params
+          })
+        });
+      }catch(e){
+        console.warn('POST to backend failed:', e);
+      }
+
+      showNote(noteSubmit, 'success', 'Submission Successful!');
+      // refresh results panel source
+      if ($('#panelResults').classList.contains('active')) {
+        loadRecentSubmissions();
+      }
     });
 
-    $('#btnIncompleteOK').addEventListener('click', ()=> closeModal(incompleteModal));
-    $('#btnSuccessOK').addEventListener('click', ()=> closeModal(successModal));
+    // Results rendering
+    const resultsContainer = $('#resultsContainer');
+    const resultsSource = $('#resultsSource');
 
-    // Render results
-    function renderResults(){
-      const out = $('#resultsContainer');
-      const time = $('#resultsTime');
-      out.innerHTML = '';
-      if(!state.submission){
-        time.textContent = '—';
-        out.innerHTML = '<p class="muted">No submissions yet.</p>';
+    function renderResults(list, sourceLabel){
+      resultsContainer.innerHTML = '';
+      resultsSource.textContent = sourceLabel;
+
+      if (!list || !list.length){
+        resultsContainer.innerHTML = '<p class="muted">No submissions yet.</p>';
         return;
       }
-      const at = new Date(state.submission.at);
-      time.textContent = at.toLocaleString();
-      const tbl = document.createElement('table');
-      const thead = document.createElement('thead');
-      thead.innerHTML = '<tr><th>Field</th><th>Value</th></tr>';
-      tbl.appendChild(thead);
-      const tbody = document.createElement('tbody');
 
-      const labelsFlow = [
-        'Request Title','Request Type','Department','Assignee','Start Date',
-        'End Date','Priority','Environment','Requires Manager Approval','Description'
-      ];
-      const labelsParam = [
-        'Max Retries','Timeout (ms)','Batch Size','Threshold (%)','Parallel Workers',
-        'Region Code','Retry Backoff (ms)','Alert Level','Schedule Hour','Confirmation Code'
-      ];
+      list.slice(0,5).forEach((item, idx)=>{
+        const card = document.createElement('div');
+        card.style.margin = '14px 0';
+        const at = new Date(item.at || Date.now());
+        card.innerHTML = `<p><strong>#${idx+1}</strong> — ${at.toLocaleString()}</p>`;
+        const tbl = document.createElement('table');
+        const thead = document.createElement('thead');
+        thead.innerHTML = '<tr><th>Field</th><th>Value</th></tr>';
+        tbl.appendChild(thead);
+        const tbody = document.createElement('tbody');
 
-      // Flow rows
-      flowIds.forEach((id, idx)=>{
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>Flow: ${labelsFlow[idx]}</td><td>${escapeHtml(state.submission.flow[id]||'')}</td>`;
-        tbody.appendChild(tr);
+        const labelsFlow = [
+          'Request Title','Request Type','Department','Assignee','Start Date',
+          'End Date','Priority','Environment','Requires Manager Approval','Description'
+        ];
+        const labelsParam = [
+          'Max Retries','Timeout (ms)','Batch Size','Threshold (%)','Parallel Workers',
+          'Region Code','Retry Backoff (ms)','Alert Level','Schedule Hour','Confirmation Code'
+        ];
+        const flowIds = ['flow1','flow2','flow3','flow4','flow5','flow6','flow7','flow8','flow9','flow10'];
+        const paramIds = ['param1','param2','param3','param4','param5','param6','param7','param8','param9','param10'];
+
+        flowIds.forEach((id, i)=>{
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>Flow: ${labelsFlow[i]}</td><td>${escapeHtml(item.flow?.[id] ?? '')}</td>`;
+          tbody.appendChild(tr);
+        });
+        paramIds.forEach((id, i)=>{
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>Param: ${labelsParam[i]}</td><td>${escapeHtml(item.params?.[id] ?? '')}</td>`;
+          tbody.appendChild(tr);
+        });
+
+        tbl.appendChild(tbody);
+        card.appendChild(tbl);
+        resultsContainer.appendChild(card);
       });
-      // Param rows
-      paramIds.forEach((id, idx)=>{
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>Param: ${labelsParam[idx]}</td><td>${escapeHtml(state.submission.params[id]||'')}</td>`;
-        tbody.appendChild(tr);
-      });
-      tbl.appendChild(tbody);
-      out.appendChild(tbl);
     }
 
     function escapeHtml(str){
@@ -630,20 +577,53 @@
         .replace(/'/g,'&#39;');
     }
 
-    // Initial render of results (if any)
-    renderResults();
+    async function fetchRecentFromBackend(limit=5){
+      // 期望 Apps Script 支持 GET ?mode=recent&limit=5 返回 { ok:true, rows:[{at, user, flow, params}, ...] }
+      const url = `${BACKEND_URL}?mode=recent&limit=${encodeURIComponent(limit)}`;
+      const res = await fetch(url, { method:'GET' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (!data || !data.ok || !Array.isArray(data.rows)) throw new Error('Unexpected response');
+      // 规范化字段名
+      return data.rows.map(r=>({
+        at: r.at || r.SubmittedAt || r.submittedAt || r.timestamp || r.Timestamp,
+        user: r.user || { name: r.userName || r.name || '', email: r.userEmail || '' },
+        flow: r.flow || Object.fromEntries(Object.keys(r).filter(k=>/^flow\d+$/.test(k)).map(k=>[k, r[k]])),
+        params: r.params || Object.fromEntries(Object.keys(r).filter(k=>/^param\d+$/.test(k)).map(k=>[k, r[k]]))
+      }));
+    }
 
-    // Keyboard handling: close modals on backdrop click or Escape
-    [authModal, incompleteModal, successModal].forEach(mod=>{
-      mod.addEventListener('click', (e)=>{ if(e.target === mod) closeModal(mod); });
-    });
-    document.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape'){
-        [authModal, incompleteModal, successModal].forEach(m=>{
-          if(m.classList.contains('show')) closeModal(m);
-        });
+    function loadRecentFromLocal(limit=5){
+      const hist = loadLS(HISTORY_KEY, []);
+      return hist.slice(0, limit);
+    }
+
+    async function loadRecentSubmissions(){
+      // Try backend first
+      try{
+        if (BACKEND_HAS_RECENT_API_HINT){
+          const rows = await fetchRecentFromBackend(5);
+          renderResults(rows, 'Source: Google Sheets (live)');
+          return;
+        }
+        throw new Error('recent API disabled');
+      }catch(e){
+        console.warn('Fetch recent from backend failed, fallback to local history:', e);
+        const rows = loadRecentFromLocal(5);
+        const label = rows.length ? 'Source: Local cache (enable recent API for live data)' : 'Source: No data';
+        renderResults(rows, label);
       }
-    });
+    }
+
+    // Initial results if Results tab is default (not default here)
+    // activateTab(2);
+
+    // Shortcuts: switch tab on hash (#results etc.)
+    (()=> {
+      const map = { '#flow':0, '#params':1, '#results':2 };
+      const idx = map[location.hash.toLowerCase()];
+      if (typeof idx === 'number') activateTab(idx);
+    })();
   </script>
 </body>
 </html>
