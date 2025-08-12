@@ -149,7 +149,7 @@
       <!-- Flow Entry -->
       <section class="section active" id="panelFlow" role="tabpanel" aria-labelledby="tabFlow">
         <h2>Flow Entry</h2>
-        <p class="muted">Fill all fields below.</p>
+        <p class="muted">Fill all fields below, then click Save.</p>
         <div class="grid">
           <div class="field">
             <label for="flow1">Request Title</label>
@@ -220,8 +220,8 @@
             <label for="flow10">Description</label>
             <textarea id="flow10" data-testid="flow-field-10" placeholder="Enter details…" required></textarea>
           </div>
-        </div>
-        <!-- <div class="actions">
+        <!-- </div>
+        <div class="actions">
           <button class="btn success" id="btnSaveFlow" data-testid="btn-save-flow">Save</button>
         </div> -->
         <div id="noteFlow" class="note" style="display:none" data-testid="msg-flow-save" aria-live="polite"></div>
@@ -412,30 +412,59 @@
     }
     function hideNote(el){ el.style.display = 'none'; el.textContent = ''; el.classList.remove('success','error','info'); }
 
-    // Save (Flow)
-    $('#btnSaveFlow').addEventListener('click', ()=>{
+    // // Save (Flow)
+    // $('#btnSaveFlow').addEventListener('click', ()=>{
+    //   const F = {};
+    //   let complete=true;
+    //   flowIds.forEach(id=>{
+    //     const v = (document.getElementById(id).value||'').trim();
+    //     F[id]=v;
+    //     if(!v) complete=false;
+    //   });
+    //   state.flow = F; persist();
+    //   showNote(noteFlow, complete ? 'success' : 'info', complete ? 'Saved successfully.' : 'Saved (some fields are empty).');
+    // });
+
+    // // Save (Params)
+    // $('#btnSaveParams').addEventListener('click', ()=>{
+    //   const P = {};
+    //   let complete=true;
+    //   paramIds.forEach(id=>{
+    //     const v = (document.getElementById(id).value||'').trim();
+    //     P[id]=v;
+    //     if(!v) complete=false;
+    //   });
+    //   state.params = P; persist();
+    //   showNote(noteParams, complete ? 'success' : 'info', complete ? 'Saved successfully.' : 'Saved (some fields are empty).');
+    // });
+    // 修改 Save (Params) 按钮逻辑
+    $('#btnSaveParams').addEventListener('click', ()=>{
       const F = {};
-      let complete=true;
+      let flowComplete=true;
       flowIds.forEach(id=>{
         const v = (document.getElementById(id).value||'').trim();
         F[id]=v;
-        if(!v) complete=false;
+        if(!v) flowComplete=false;
       });
-      state.flow = F; persist();
-      showNote(noteFlow, complete ? 'success' : 'info', complete ? 'Saved successfully.' : 'Saved (some fields are empty).');
-    });
 
-    // Save (Params)
-    $('#btnSaveParams').addEventListener('click', ()=>{
       const P = {};
-      let complete=true;
+      let paramComplete=true;
       paramIds.forEach(id=>{
         const v = (document.getElementById(id).value||'').trim();
         P[id]=v;
-        if(!v) complete=false;
+        if(!v) paramComplete=false;
       });
-      state.params = P; persist();
-      showNote(noteParams, complete ? 'success' : 'info', complete ? 'Saved successfully.' : 'Saved (some fields are empty).');
+
+      state.flow = F;
+      state.params = P;
+      persist();
+
+      // 提示逻辑
+      if (flowComplete && paramComplete) {
+        showNote(noteParams, 'success', 'Saved successfully.');
+      } else {
+        showNote(noteParams, 'info', 'Saved (some fields are empty).');
+      }
     });
 
     function gatherMissing(){
@@ -482,12 +511,63 @@
       }
     }
 
-    // Submit
+    // // Submit
+    // $('#btnSubmit').addEventListener('click', async ()=>{
+    //   hideNote(noteSubmit);
+
+    //   const missing = gatherMissing();
+    //   if(missing.length){
+    //     showNote(noteSubmit, 'error', 'Information incomplete, please continue filling');
+    //     return;
+    //   }
+
+    //   // Build payload
+    //   state.flow = Object.fromEntries(flowIds.map(id=>[id, document.getElementById(id).value.trim()]));
+    //   state.params = Object.fromEntries(paramIds.map(id=>[id, document.getElementById(id).value.trim()]));
+    //   const submission = { flow: {...state.flow}, params: {...state.params}, at: new Date().toISOString(), user: state.user };
+    //   state.submission = submission; persist();
+
+    //   // Local history for fallback
+    //   const history = loadLS(HISTORY_KEY, []) || [];
+    //   history.unshift(submission);
+    //   if (history.length > 50) history.length = 50;
+    //   saveLS(HISTORY_KEY, history);
+
+    //   // Send
+    //   await recordSubmissionToSheets(submission);
+
+    //   // Success message
+    //   showNote(noteSubmit, 'success', 'Submission successful!');
+
+    //   // Clear forms and local form state
+    //   resetForms();
+    //   state.flow = {};
+    //   state.params = {};
+    //   state.submission = null;
+    //   persist();
+
+    //   // Refresh results if visible
+    //   if ($('#panelResults').classList.contains('active')) {
+    //     loadRecentSubmissions();
+    //   }
+    // });
+    // 修改 Submit 按钮逻辑
     $('#btnSubmit').addEventListener('click', async ()=>{
       hideNote(noteSubmit);
 
-      const missing = gatherMissing();
-      if(missing.length){
+      let flowComplete=true;
+      flowIds.forEach(id=>{
+        const v = (document.getElementById(id).value||'').trim();
+        if(!v) flowComplete=false;
+      });
+
+      let paramComplete=true;
+      paramIds.forEach(id=>{
+        const v = (document.getElementById(id).value||'').trim();
+        if(!v) paramComplete=false;
+      });
+
+      if(!(flowComplete && paramComplete)){
         showNote(noteSubmit, 'error', 'Information incomplete, please continue filling');
         return;
       }
