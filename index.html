@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
@@ -140,25 +140,25 @@
     <aside>
       <div class="nav" role="tablist" aria-label="Main sections">
         <button class="tab active" id="tabFlow" role="tab" aria-selected="true" aria-controls="panelFlow" data-testid="tab-flow">Request Form</button>
-        <button class="tab" id="tabParams" role="tab" aria-selected="false" aria-controls="panelParams" data-testid="tab-params">Parameters</button>
+        <button class="tab" id="tabParams" role="tab" aria-selected="false" aria-controls="panelParams" data-testid="tab-params">Parameter Settings</button>
         <button class="tab" id="tabResults" role="tab" aria-selected="false" aria-controls="panelResults" data-testid="tab-results">Submission Results</button>
       </div>
     </aside>
 
     <main>
-      <!-- Request Form -->
+      <!-- 流程填写 -->
       <section class="section active" id="panelFlow" role="tabpanel" aria-labelledby="tabFlow">
         <h2>Request Form</h2>
         <p class="muted">Fill in all fields and click "Save".</p>
         <div class="grid">
           <div class="field">
-            <label for="request_title">Request Title</label>
-            <input id="request_title" data-testid="flow-field-request_title" placeholder="Please enter title" required />
+            <label for="flow_request_title">Request Title</label>
+            <input id="flow_request_title" data-testid="flow-field-1" placeholder="Please enter title" required />
           </div>
           <div class="field">
-            <label for="request_type">Request Type</label>
-            <select id="request_type" data-testid="flow-field-request_type" required>
-              <option value="">Please select…</option>
+            <label for="flow_request_type">Request Type</label>
+            <select id="flow_request_type" data-testid="flow-field-2" required>
+              <option value="">Please select type...</option>
               <option>Onboarding</option>
               <option>Offboarding</option>
               <option>Access</option>
@@ -166,9 +166,9 @@
             </select>
           </div>
           <div class="field">
-            <label for="department">Department</label>
-            <select id="department" data-testid="flow-field-department" required>
-              <option value="">Please select…</option>
+            <label for="flow_department">Department</label>
+            <select id="flow_department" data-testid="flow-field-3" required>
+              <option value="">Please select department...</option>
               <option>Engineering</option>
               <option>Sales</option>
               <option>HR</option>
@@ -177,21 +177,21 @@
             </select>
           </div>
           <div class="field">
-            <label for="assignee">Assignee</label>
-            <input id="assignee" data-testid="flow-field-assignee" placeholder="e.g. Jane Doe" required />
+            <label for="flow_assignee">Assignee</label>
+            <input id="flow_assignee" data-testid="flow-field-4" placeholder="e.g. Jane Doe" required />
           </div>
           <div class="field">
-            <label for="start_date">Start Date</label>
-            <input id="start_date" type="date" data-testid="flow-field-start_date" required />
+            <label for="flow_start_date">Start Date</label>
+            <input id="flow_start_date" type="date" data-testid="flow-field-5" required />
           </div>
           <div class="field">
-            <label for="end_date">End Date</label>
-            <input id="end_date" type="date" data-testid="flow-field-end_date" required />
+            <label for="flow_end_date">End Date</label>
+            <input id="flow_end_date" type="date" data-testid="flow-field-6" required />
           </div>
           <div class="field">
-            <label for="priority">Priority</label>
-            <select id="priority" data-testid="flow-field-priority" required>
-              <option value="">Please select…</option>
+            <label for="flow_priority">Priority</label>
+            <select id="flow_priority" data-testid="flow-field-7" required>
+              <option value="">Please select priority...</option>
               <option>Low</option>
               <option>Medium</option>
               <option>High</option>
@@ -199,9 +199,9 @@
             </select>
           </div>
           <div class="field">
-            <label for="environment">Environment</label>
-            <select id="environment" data-testid="flow-field-environment" required>
-              <option value="">Please select…</option>
+            <label for="flow_environment">Environment</label>
+            <select id="flow_environment" data-testid="flow-field-8" required>
+              <option value="">Please select environment...</option>
               <option>DEV</option>
               <option>QA</option>
               <option>STAGE</option>
@@ -209,16 +209,16 @@
             </select>
           </div>
           <div class="field">
-            <label for="manager_approval">Requires Manager Approval</label>
-            <select id="manager_approval" data-testid="flow-field-manager_approval" required>
-              <option value="">Please select…</option>
+            <label for="flow_approval">Requires Manager Approval</label>
+            <select id="flow_approval" data-testid="flow-field-9" required>
+              <option value="">Please select approval...</option>
               <option>Yes</option>
               <option>No</option>
             </select>
           </div>
           <div class="field" style="grid-column:1/-1">
-            <label for="description">Description</label>
-            <textarea id="description" data-testid="flow-field-description" placeholder="Please enter description…" required></textarea>
+            <label for="flow_description">Description</label>
+            <textarea id="flow_description" data-testid="flow-field-10" placeholder="Please enter description…" required></textarea>
           </div>
         </div>
         <div class="actions">
@@ -227,66 +227,66 @@
         <div id="noteFlow" class="note" style="display:none" data-testid="msg-flow-save" aria-live="polite"></div>
       </section>
 
-      <!-- Parameters -->
+      <!-- 参数设置 -->
       <section class="section" id="panelParams" role="tabpanel" aria-labelledby="tabParams">
-        <h2>Parameters</h2>
+        <h2>Parameter Settings</h2>
         <p class="muted">Fill in all parameters and click "Save", then click "Submit".</p>
         <div class="grid">
           <div class="field">
-            <label for="max_retries">Max Retries (0–10)</label>
-            <input id="max_retries" type="number" min="0" max="10" step="1" data-testid="param-field-max_retries" placeholder="e.g. 3" required />
+            <label for="param1">Max Retries (0–10)</label>
+            <input id="param1" type="number" min="0" max="10" step="1" data-testid="param-field-1" placeholder="e.g. 3" required />
           </div>
           <div class="field">
-            <label for="timeout_ms">Timeout (ms)</label>
-            <input id="timeout_ms" type="number" min="0" step="100" data-testid="param-field-timeout_ms" placeholder="e.g. 10000" required />
+            <label for="param2">Timeout (ms)</label>
+            <input id="param2" type="number" min="0" step="100" data-testid="param-field-2" placeholder="e.g. 10000" required />
           </div>
           <div class="field">
-            <label for="batch_size">Batch Size</label>
-            <input id="batch_size" type="number" min="1" step="1" data-testid="param-field-batch_size" placeholder="e.g. 50" required />
+            <label for="param3">Batch Size</label>
+            <input id="param3" type="number" min="1" step="1" data-testid="param-field-3" placeholder="e.g. 50" required />
           </div>
           <div class="field">
-            <label for="threshold_pct">Threshold (%)</label>
-            <input id="threshold_pct" type="number" min="0" max="100" step="1" data-testid="param-field-threshold_pct" placeholder="e.g. 80" required />
+            <label for="param4">Threshold (%)</label>
+            <input id="param4" type="number" min="0" max="100" step="1" data-testid="param-field-4" placeholder="e.g. 80" required />
           </div>
           <div class="field">
-            <label for="parallel_workers">Parallel Workers</label>
-            <select id="parallel_workers" data-testid="param-field-parallel_workers" required>
-              <option value="">Please select…</option>
+            <label for="param5">Parallel Workers</label>
+            <select id="param5" data-testid="param-field-5" required>
+              <option value="">Please select workers...</option>
               <option>1</option><option>2</option><option>3</option><option>4</option>
               <option>5</option><option>6</option><option>7</option><option>8</option>
               <option>9</option><option>10</option>
             </select>
           </div>
           <div class="field">
-            <label for="region_code">Region Code</label>
-            <select id="region_code" data-testid="param-field-region_code" required>
-              <option value="">Please select…</option>
+            <label for="param6">Region Code</label>
+            <select id="param6" data-testid="param-field-6" required>
+              <option value="">Please select code...</option>
               <option>1</option><option>2</option><option>3</option>
             </select>
           </div>
           <div class="field">
-            <label for="retry_backoff_ms">Retry Backoff (ms)</label>
-            <input id="retry_backoff_ms" type="number" min="0" step="100" data-testid="param-field-retry_backoff_ms" placeholder="e.g. 2000" required />
+            <label for="param7">Retry Backoff (ms)</label>
+            <input id="param7" type="number" min="0" step="100" data-testid="param-field-7" placeholder="e.g. 2000" required />
           </div>
           <div class="field">
-            <label for="alert_level">Alert Level</label>
-            <select id="alert_level" data-testid="param-field-alert_level" required>
-              <option value="">Please select…</option>
+            <label for="param8">Alert Level</label>
+            <select id="param8" data-testid="param-field-8" required>
+              <option value="">Please select level...</option>
               <option>0</option><option>1</option><option>2</option><option>3</option>
             </select>
           </div>
           <div class="field">
-            <label for="schedule_hour">Schedule Hour (0–23)</label>
-            <select id="schedule_hour" data-testid="param-field-schedule_hour" required>
-              <option value="">Please select…</option>
+            <label for="param9">Schedule Hour (0–23)</label>
+            <select id="param9" data-testid="param-field-9" required>
+              <option value="">Please select hour...</option>
               <script>
-                // JS will populate 0-23
+                // 稍后由 JS 填充 0-23
               </script>
             </select>
           </div>
           <div class="field">
-            <label for="confirmation_code">Confirmation Code</label>
-            <input id="confirmation_code" type="number" step="1" data-testid="param-field-confirmation_code" placeholder="e.g. 123456" required />
+            <label for="param10">Confirmation Code</label>
+            <input id="param10" type="number" step="1" data-testid="param-field-10" placeholder="e.g. 123456" required />
           </div>
         </div>
         <div class="actions">
@@ -299,7 +299,7 @@
         <p class="muted">Tip: If there are blank fields, "Incomplete information, please continue filling" will be shown.</p>
       </section>
 
-      <!-- Submission Results -->
+      <!-- 提交结果 -->
       <section class="section" id="panelResults" role="tabpanel" aria-labelledby="tabResults">
         <h2>Submission Results</h2>
         <p class="muted">Shows the latest 5 records from Google Sheets (fallback to local cache if backend is unavailable).</p>
@@ -310,15 +310,17 @@
   </div>
 
   <script>
-    // ============ Basic Utilities ============
+    // ============ 基础工具 ============
     const $ = (sel, ctx=document)=>ctx.querySelector(sel);
     const $$ = (sel, ctx=document)=>Array.from(ctx.querySelectorAll(sel));
 
+    // 你的 Apps Script Web App URL（请在更换部署版本后同步更新）
     const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyJuc5kD6ysXYfGRzbDgoQ_jCe3OOq8NTRIXGAxIkJ02tdRwszUjL-OyeYIA5_BMCNp/exec';
 
     const STATE_KEY   = 'pw-demo-state';
-    const HISTORY_KEY = 'pw-demo-history';
+    const HISTORY_KEY = 'pw-demo-history'; // 用于回退显示最近记录
 
+    // 简易登录（演示用）
     const userPill = $('#userPill');
     const btnAuth = $('#btnAuth');
     let signedIn = false;
@@ -345,7 +347,7 @@
     }
     btnAuth.addEventListener('click', ()=>{
       if(!signedIn){
-        const name = prompt('Please enter your name (demo login)','User');
+        const name = prompt('Please enter your name','User');
         const email = prompt('Please enter your email','user@example.com');
         if(name && email){ state.user = { name, email }; signedIn = true; persist(); updateUserUI(); }
       }else{
@@ -354,9 +356,9 @@
     });
     updateUserUI();
 
-    // Populate hours 0..23
+    // 填充小时 0..23
     (function populateHours(){
-      const sel = $('#schedule_hour');
+      const sel = $('#param9');
       if (!sel) return;
       const frag = document.createDocumentFragment();
       for(let i=0;i<24;i++){
@@ -367,7 +369,7 @@
       sel.appendChild(frag);
     })();
 
-    // Tabs
+    // 选项卡
     const tabs = [
       {btn: $('#tabFlow'), panel: $('#panelFlow')},
       {btn: $('#tabParams'), panel: $('#panelParams')},
@@ -383,15 +385,9 @@
     }
     tabs.forEach((t,i)=> t.btn.addEventListener('click', ()=>activateTab(i)));
 
-    // Form load/save
-    const flowIds = [
-      'request_title','request_type','department','assignee','start_date',
-      'end_date','priority','environment','manager_approval','description'
-    ];
-    const paramIds = [
-      'max_retries','timeout_ms','batch_size','threshold_pct','parallel_workers',
-      'region_code','retry_backoff_ms','alert_level','schedule_hour','confirmation_code'
-    ];
+    // 表单加载/保存
+    const flowIds = ['flow1','flow2','flow3','flow4','flow5','flow6','flow7','flow8','flow9','flow10'];
+    const paramIds = ['param1','param2','param3','param4','param5','param6','param7','param8','param9','param10'];
 
     function setVal(id, val){ const el = document.getElementById(id); if(el && val!=null) el.value = val; }
     function loadForms(){
@@ -401,7 +397,7 @@
     function persist(){ saveLS(STATE_KEY, state); }
     loadForms();
 
-    // Inline notes
+    // 内联提示
     const noteFlow = $('#noteFlow');
     const noteParams = $('#noteParams');
     const noteSubmit = $('#noteSubmit');
@@ -413,7 +409,7 @@
     }
     function hideNote(el){ el.style.display = 'none'; el.textContent = ''; el.classList.remove('success','error','info'); }
 
-    // Save (Request Form)
+    // 保存（流程）
     $('#btnSaveFlow').addEventListener('click', ()=>{
       const F = {};
       let complete=true;
@@ -426,7 +422,7 @@
       showNote(noteFlow, complete ? 'success' : 'info', complete ? 'Saved successfully' : 'Saved (some fields are blank)');
     });
 
-    // Save (Parameters)
+    // 保存（参数）
     $('#btnSaveParams').addEventListener('click', ()=>{
       const P = {};
       let complete=true;
@@ -446,19 +442,21 @@
       return missing;
     }
 
-    // Reset forms (new)
+    // 清空表单（新增）
     function resetForms(){
       [...flowIds, ...paramIds].forEach(id=>{
         const el = document.getElementById(id);
         if (!el) return;
-        el.value = '';
+        el.value = ''; // 对于 input/textarea/带有占位项的 select 均可恢复到“请选择…/空”
       });
+      // 清掉保存提示
       hideNote(noteFlow);
       hideNote(noteParams);
     }
 
-    // Send to Google Sheets (fallback to no-cors)
+    // 发送到 Google Sheets（自动回退 no-cors）
     async function recordSubmissionToSheets(payload){
+      // 尝试标准 CORS JSON
       try{
         const res = await fetch(BACKEND_URL, {
           method: 'POST',
@@ -468,6 +466,7 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return true;
       }catch(err){
+        // 回退：no-cors + text/plain（不可读响应，但能送达）
         try{
           await fetch(BACKEND_URL, {
             method: 'POST',
@@ -483,7 +482,7 @@
       }
     }
 
-    // Submit
+    // 提交
     $('#btnSubmit').addEventListener('click', async ()=>{
       hideNote(noteSubmit);
 
@@ -493,34 +492,40 @@
         return;
       }
 
+      // 组装数据
       state.flow = Object.fromEntries(flowIds.map(id=>[id, document.getElementById(id).value.trim()]));
       state.params = Object.fromEntries(paramIds.map(id=>[id, document.getElementById(id).value.trim()]));
       const submission = { flow: {...state.flow}, params: {...state.params}, at: new Date().toISOString(), user: state.user };
       state.submission = submission; persist();
 
+      // 本地历史（结果回退用）
       const history = loadLS(HISTORY_KEY, []) || [];
       history.unshift(submission);
       if (history.length > 50) history.length = 50;
       saveLS(HISTORY_KEY, history);
 
+      // 上报后端
       await recordSubmissionToSheets(submission);
 
+      // 成功提示
       showNote(noteSubmit, 'success', 'Submitted successfully!');
 
+      // 清空表单与本地表单状态（新增）
       resetForms();
       state.flow = {};
       state.params = {};
-      state.submission = null;
+      state.submission = null; // 可选：清空最近一次表单内容的本地快照
       persist();
 
+      // 若当前在“提交结果”，刷新；否则等用户切换到“提交结果”时加载
       if ($('#panelResults').classList.contains('active')) {
         loadRecentSubmissions();
       }
     });
 
-    // Results rendering
+    // 结果列表渲染
     const resultsContainer = $('#resultsContainer');
-    const resultsSource = $('#resultsSource';
+    const resultsSource = $('#resultsSource');
 
     function escapeHtml(str){
       return String(str)
@@ -536,7 +541,7 @@
       resultsSource.textContent = sourceLabel;
 
       if (!list || !list.length){
-        resultsContainer.innerHTML = '<p class="muted">No data.</p>';
+        resultsContainer.innerHTML = '<p class="muted">暂无数据。</p>';
         return;
       }
 
@@ -559,18 +564,12 @@
           'Max Retries','Timeout (ms)','Batch Size','Threshold (%)','Parallel Workers',
           'Region Code','Retry Backoff (ms)','Alert Level','Schedule Hour','Confirmation Code'
         ];
-        const fids = [
-          'request_title','request_type','department','assignee','start_date',
-          'end_date','priority','environment','manager_approval','description'
-        ];
-        const pids = [
-          'max_retries','timeout_ms','batch_size','threshold_pct','parallel_workers',
-          'region_code','retry_backoff_ms','alert_level','schedule_hour','confirmation_code'
-        ];
+        const fids = ['flow1','flow2','flow3','flow4','flow5','flow6','flow7','flow8','flow9','flow10'];
+        const pids = ['param1','param2','param3','param4','param5','param6','param7','param8','param9','param10'];
 
         fids.forEach((id, i)=>{
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td>Form: ${labelsFlow[i]}</td><td>${escapeHtml(item.flow?.[id] ?? '')}</td>`;
+          tr.innerHTML = `<td>Form：${labelsFlow[i]}</td><td>${escapeHtml(item.flow?.[id] ?? '')}</td>`;
           tbody.appendChild(tr);
         });
         pids.forEach((id, i)=>{
@@ -585,13 +584,13 @@
       });
     }
 
-    // Fetch recent records from backend (standard GET)
+    // 从后端读取最近记录（标准 GET）
     async function fetchRecentFromBackend(limit=5){
       const url = `${BACKEND_URL}?mode=recent&limit=${encodeURIComponent(limit)}`;
       const res = await fetch(url, { method:'GET' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      if (!data || !data.ok || !Array.isArray(data.rows)) throw new Error('Invalid response format');
+      if (!data || !data.ok || !Array.isArray(data.rows)) throw new Error('响应格式异常');
       return data.rows;
     }
     function loadRecentFromLocal(limit=5){
@@ -606,11 +605,11 @@
       }catch(e){
         console.warn('Failed to read backend, using local cache:', e);
         const rows = loadRecentFromLocal(5);
-        renderResults(rows, rows.length ? 'Source: Local cache (backend unavailable)' : 'Source: No data');
+        renderResults(rows, rows.length ? 'Source: Local cache (backend unavailable)' : 'Source: No data available');
       }
     }
 
-    // Hash shortcut for tab switching
+    // 地址栏 hash 快捷切换
     (function initFromHash(){
       const map = { '#flow':0, '#params':1, '#results':2, '#request':0, '#parameters':1, '#results':2 };
       const idx = map[location.hash.toLowerCase()];
