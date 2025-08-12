@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
@@ -127,38 +127,38 @@
       <div class="logo" aria-hidden="true"></div>
       <div>
         <h1>Playwright Codegen Agent Test</h1>
-        <small class="muted">静态演示站点（内联提示 + Google Sheets 后端）</small>
+        <small class="muted">Static demo site (inline tips + Google Sheets backend)</small>
       </div>
     </div>
     <div class="right">
-      <span id="userPill" class="user-pill" data-testid="user-display" aria-live="polite">未登录</span>
-      <button class="btn" id="btnAuth" data-testid="btn-auth">注册 / 登录</button>
+      <span id="userPill" class="user-pill" data-testid="user-display" aria-live="polite">Not logged in</span>
+      <button class="btn" id="btnAuth" data-testid="btn-auth">Register / Login</button>
     </div>
   </header>
 
   <div class="container">
     <aside>
       <div class="nav" role="tablist" aria-label="Main sections">
-        <button class="tab active" id="tabFlow" role="tab" aria-selected="true" aria-controls="panelFlow" data-testid="tab-flow">流程填写</button>
-        <button class="tab" id="tabParams" role="tab" aria-selected="false" aria-controls="panelParams" data-testid="tab-params">参数设置</button>
-        <button class="tab" id="tabResults" role="tab" aria-selected="false" aria-controls="panelResults" data-testid="tab-results">提交结果</button>
+        <button class="tab active" id="tabFlow" role="tab" aria-selected="true" aria-controls="panelFlow" data-testid="tab-flow">Request Form</button>
+        <button class="tab" id="tabParams" role="tab" aria-selected="false" aria-controls="panelParams" data-testid="tab-params">Parameters</button>
+        <button class="tab" id="tabResults" role="tab" aria-selected="false" aria-controls="panelResults" data-testid="tab-results">Submission Results</button>
       </div>
     </aside>
 
     <main>
-      <!-- 流程填写 -->
+      <!-- Request Form -->
       <section class="section active" id="panelFlow" role="tabpanel" aria-labelledby="tabFlow">
-        <h2>流程填写</h2>
-        <p class="muted">填写所有字段后点击“保存”。</p>
+        <h2>Request Form</h2>
+        <p class="muted">Fill in all fields and click "Save".</p>
         <div class="grid">
           <div class="field">
-            <label for="flow1">Request Title</label>
-            <input id="flow1" data-testid="flow-field-1" placeholder="请输入标题" required />
+            <label for="request_title">Request Title</label>
+            <input id="request_title" data-testid="flow-field-request_title" placeholder="Please enter title" required />
           </div>
           <div class="field">
-            <label for="flow2">Request Type</label>
-            <select id="flow2" data-testid="flow-field-2" required>
-              <option value="">请选择…</option>
+            <label for="request_type">Request Type</label>
+            <select id="request_type" data-testid="flow-field-request_type" required>
+              <option value="">Please select…</option>
               <option>Onboarding</option>
               <option>Offboarding</option>
               <option>Access</option>
@@ -166,9 +166,9 @@
             </select>
           </div>
           <div class="field">
-            <label for="flow3">Department</label>
-            <select id="flow3" data-testid="flow-field-3" required>
-              <option value="">请选择…</option>
+            <label for="department">Department</label>
+            <select id="department" data-testid="flow-field-department" required>
+              <option value="">Please select…</option>
               <option>Engineering</option>
               <option>Sales</option>
               <option>HR</option>
@@ -177,21 +177,21 @@
             </select>
           </div>
           <div class="field">
-            <label for="flow4">Assignee</label>
-            <input id="flow4" data-testid="flow-field-4" placeholder="如：Jane Doe" required />
+            <label for="assignee">Assignee</label>
+            <input id="assignee" data-testid="flow-field-assignee" placeholder="e.g. Jane Doe" required />
           </div>
           <div class="field">
-            <label for="flow5">Start Date</label>
-            <input id="flow5" type="date" data-testid="flow-field-5" required />
+            <label for="start_date">Start Date</label>
+            <input id="start_date" type="date" data-testid="flow-field-start_date" required />
           </div>
           <div class="field">
-            <label for="flow6">End Date</label>
-            <input id="flow6" type="date" data-testid="flow-field-6" required />
+            <label for="end_date">End Date</label>
+            <input id="end_date" type="date" data-testid="flow-field-end_date" required />
           </div>
           <div class="field">
-            <label for="flow7">Priority</label>
-            <select id="flow7" data-testid="flow-field-7" required>
-              <option value="">请选择…</option>
+            <label for="priority">Priority</label>
+            <select id="priority" data-testid="flow-field-priority" required>
+              <option value="">Please select…</option>
               <option>Low</option>
               <option>Medium</option>
               <option>High</option>
@@ -199,9 +199,9 @@
             </select>
           </div>
           <div class="field">
-            <label for="flow8">Environment</label>
-            <select id="flow8" data-testid="flow-field-8" required>
-              <option value="">请选择…</option>
+            <label for="environment">Environment</label>
+            <select id="environment" data-testid="flow-field-environment" required>
+              <option value="">Please select…</option>
               <option>DEV</option>
               <option>QA</option>
               <option>STAGE</option>
@@ -209,118 +209,116 @@
             </select>
           </div>
           <div class="field">
-            <label for="flow9">Requires Manager Approval</label>
-            <select id="flow9" data-testid="flow-field-9" required>
-              <option value="">请选择…</option>
+            <label for="manager_approval">Requires Manager Approval</label>
+            <select id="manager_approval" data-testid="flow-field-manager_approval" required>
+              <option value="">Please select…</option>
               <option>Yes</option>
               <option>No</option>
             </select>
           </div>
           <div class="field" style="grid-column:1/-1">
-            <label for="flow10">Description</label>
-            <textarea id="flow10" data-testid="flow-field-10" placeholder="请输入描述…" required></textarea>
+            <label for="description">Description</label>
+            <textarea id="description" data-testid="flow-field-description" placeholder="Please enter description…" required></textarea>
           </div>
         </div>
         <div class="actions">
-          <button class="btn success" id="btnSaveFlow" data-testid="btn-save-flow">保存</button>
+          <button class="btn success" id="btnSaveFlow" data-testid="btn-save-flow">Save</button>
         </div>
         <div id="noteFlow" class="note" style="display:none" data-testid="msg-flow-save" aria-live="polite"></div>
       </section>
 
-      <!-- 参数设置 -->
+      <!-- Parameters -->
       <section class="section" id="panelParams" role="tabpanel" aria-labelledby="tabParams">
-        <h2>参数设置</h2>
-        <p class="muted">填写所有参数后点击“保存”，再点击“提交”。</p>
+        <h2>Parameters</h2>
+        <p class="muted">Fill in all parameters and click "Save", then click "Submit".</p>
         <div class="grid">
           <div class="field">
-            <label for="param1">Max Retries (0–10)</label>
-            <input id="param1" type="number" min="0" max="10" step="1" data-testid="param-field-1" placeholder="如 3" required />
+            <label for="max_retries">Max Retries (0–10)</label>
+            <input id="max_retries" type="number" min="0" max="10" step="1" data-testid="param-field-max_retries" placeholder="e.g. 3" required />
           </div>
           <div class="field">
-            <label for="param2">Timeout (ms)</label>
-            <input id="param2" type="number" min="0" step="100" data-testid="param-field-2" placeholder="如 10000" required />
+            <label for="timeout_ms">Timeout (ms)</label>
+            <input id="timeout_ms" type="number" min="0" step="100" data-testid="param-field-timeout_ms" placeholder="e.g. 10000" required />
           </div>
           <div class="field">
-            <label for="param3">Batch Size</label>
-            <input id="param3" type="number" min="1" step="1" data-testid="param-field-3" placeholder="如 50" required />
+            <label for="batch_size">Batch Size</label>
+            <input id="batch_size" type="number" min="1" step="1" data-testid="param-field-batch_size" placeholder="e.g. 50" required />
           </div>
           <div class="field">
-            <label for="param4">Threshold (%)</label>
-            <input id="param4" type="number" min="0" max="100" step="1" data-testid="param-field-4" placeholder="如 80" required />
+            <label for="threshold_pct">Threshold (%)</label>
+            <input id="threshold_pct" type="number" min="0" max="100" step="1" data-testid="param-field-threshold_pct" placeholder="e.g. 80" required />
           </div>
           <div class="field">
-            <label for="param5">Parallel Workers</label>
-            <select id="param5" data-testid="param-field-5" required>
-              <option value="">请选择…</option>
+            <label for="parallel_workers">Parallel Workers</label>
+            <select id="parallel_workers" data-testid="param-field-parallel_workers" required>
+              <option value="">Please select…</option>
               <option>1</option><option>2</option><option>3</option><option>4</option>
               <option>5</option><option>6</option><option>7</option><option>8</option>
               <option>9</option><option>10</option>
             </select>
           </div>
           <div class="field">
-            <label for="param6">Region Code</label>
-            <select id="param6" data-testid="param-field-6" required>
-              <option value="">请选择…</option>
+            <label for="region_code">Region Code</label>
+            <select id="region_code" data-testid="param-field-region_code" required>
+              <option value="">Please select…</option>
               <option>1</option><option>2</option><option>3</option>
             </select>
           </div>
           <div class="field">
-            <label for="param7">Retry Backoff (ms)</label>
-            <input id="param7" type="number" min="0" step="100" data-testid="param-field-7" placeholder="如 2000" required />
+            <label for="retry_backoff_ms">Retry Backoff (ms)</label>
+            <input id="retry_backoff_ms" type="number" min="0" step="100" data-testid="param-field-retry_backoff_ms" placeholder="e.g. 2000" required />
           </div>
           <div class="field">
-            <label for="param8">Alert Level</label>
-            <select id="param8" data-testid="param-field-8" required>
-              <option value="">请选择…</option>
+            <label for="alert_level">Alert Level</label>
+            <select id="alert_level" data-testid="param-field-alert_level" required>
+              <option value="">Please select…</option>
               <option>0</option><option>1</option><option>2</option><option>3</option>
             </select>
           </div>
           <div class="field">
-            <label for="param9">Schedule Hour (0–23)</label>
-            <select id="param9" data-testid="param-field-9" required>
-              <option value="">请选择…</option>
+            <label for="schedule_hour">Schedule Hour (0–23)</label>
+            <select id="schedule_hour" data-testid="param-field-schedule_hour" required>
+              <option value="">Please select…</option>
               <script>
-                // 稍后由 JS 填充 0-23
+                // JS will populate 0-23
               </script>
             </select>
           </div>
           <div class="field">
-            <label for="param10">Confirmation Code</label>
-            <input id="param10" type="number" step="1" data-testid="param-field-10" placeholder="如 123456" required />
+            <label for="confirmation_code">Confirmation Code</label>
+            <input id="confirmation_code" type="number" step="1" data-testid="param-field-confirmation_code" placeholder="e.g. 123456" required />
           </div>
         </div>
         <div class="actions">
-          <button class="btn success" id="btnSaveParams" data-testid="btn-save-params">保存</button>
-          <button class="btn primary" id="btnSubmit" data-testid="btn-submit">提交</button>
+          <button class="btn success" id="btnSaveParams" data-testid="btn-save-params">Save</button>
+          <button class="btn primary" id="btnSubmit" data-testid="btn-submit">Submit</button>
         </div>
         <div id="noteParams" class="note" style="display:none" data-testid="msg-params-save" aria-live="polite"></div>
         <div id="noteSubmit" class="note" style="display:none" data-testid="msg-submit" aria-live="polite"></div>
         <div class="divider"></div>
-        <p class="muted">提示：如有空白项，将显示“信息不全，请继续填写”。</p>
+        <p class="muted">Tip: If there are blank fields, "Incomplete information, please continue filling" will be shown.</p>
       </section>
 
-      <!-- 提交结果 -->
+      <!-- Submission Results -->
       <section class="section" id="panelResults" role="tabpanel" aria-labelledby="tabResults">
-        <h2>提交结果</h2>
-        <p class="muted">显示 Google Sheets 中最近 5 条记录（如无法读取则回退本地缓存）。</p>
-        <p><span class="chip" id="resultsSource" data-testid="results-source">加载中…</span></p>
+        <h2>Submission Results</h2>
+        <p class="muted">Shows the latest 5 records from Google Sheets (fallback to local cache if backend is unavailable).</p>
+        <p><span class="chip" id="resultsSource" data-testid="results-source">Loading…</span></p>
         <div id="resultsContainer" data-testid="results-container"></div>
       </section>
     </main>
   </div>
 
   <script>
-    // ============ 基础工具 ============
+    // ============ Basic Utilities ============
     const $ = (sel, ctx=document)=>ctx.querySelector(sel);
     const $$ = (sel, ctx=document)=>Array.from(ctx.querySelectorAll(sel));
 
-    // 你的 Apps Script Web App URL（请在更换部署版本后同步更新）
     const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyJuc5kD6ysXYfGRzbDgoQ_jCe3OOq8NTRIXGAxIkJ02tdRwszUjL-OyeYIA5_BMCNp/exec';
 
     const STATE_KEY   = 'pw-demo-state';
-    const HISTORY_KEY = 'pw-demo-history'; // 用于回退显示最近记录
+    const HISTORY_KEY = 'pw-demo-history';
 
-    // 简易登录（演示用）
     const userPill = $('#userPill');
     const btnAuth = $('#btnAuth');
     let signedIn = false;
@@ -336,19 +334,19 @@
 
     function updateUserUI(){
       if(signedIn && state.user){
-        userPill.textContent = `已登录：${state.user.name}`;
-        btnAuth.textContent = '退出登录';
+        userPill.textContent = `Logged in: ${state.user.name}`;
+        btnAuth.textContent = 'Logout';
         btnAuth.classList.add('danger');
       }else{
-        userPill.textContent = '未登录';
-        btnAuth.textContent = '注册 / 登录';
+        userPill.textContent = 'Not logged in';
+        btnAuth.textContent = 'Register / Login';
         btnAuth.classList.remove('danger');
       }
     }
     btnAuth.addEventListener('click', ()=>{
       if(!signedIn){
-        const name = prompt('请输入姓名（演示登录）','User');
-        const email = prompt('请输入邮箱','user@example.com');
+        const name = prompt('Please enter your name (demo login)','User');
+        const email = prompt('Please enter your email','user@example.com');
         if(name && email){ state.user = { name, email }; signedIn = true; persist(); updateUserUI(); }
       }else{
         signedIn = false; state.user = null; persist(); updateUserUI();
@@ -356,9 +354,9 @@
     });
     updateUserUI();
 
-    // 填充小时 0..23
+    // Populate hours 0..23
     (function populateHours(){
-      const sel = $('#param9');
+      const sel = $('#schedule_hour');
       if (!sel) return;
       const frag = document.createDocumentFragment();
       for(let i=0;i<24;i++){
@@ -369,7 +367,7 @@
       sel.appendChild(frag);
     })();
 
-    // 选项卡
+    // Tabs
     const tabs = [
       {btn: $('#tabFlow'), panel: $('#panelFlow')},
       {btn: $('#tabParams'), panel: $('#panelParams')},
@@ -385,9 +383,15 @@
     }
     tabs.forEach((t,i)=> t.btn.addEventListener('click', ()=>activateTab(i)));
 
-    // 表单加载/保存
-    const flowIds = ['flow1','flow2','flow3','flow4','flow5','flow6','flow7','flow8','flow9','flow10'];
-    const paramIds = ['param1','param2','param3','param4','param5','param6','param7','param8','param9','param10'];
+    // Form load/save
+    const flowIds = [
+      'request_title','request_type','department','assignee','start_date',
+      'end_date','priority','environment','manager_approval','description'
+    ];
+    const paramIds = [
+      'max_retries','timeout_ms','batch_size','threshold_pct','parallel_workers',
+      'region_code','retry_backoff_ms','alert_level','schedule_hour','confirmation_code'
+    ];
 
     function setVal(id, val){ const el = document.getElementById(id); if(el && val!=null) el.value = val; }
     function loadForms(){
@@ -397,7 +401,7 @@
     function persist(){ saveLS(STATE_KEY, state); }
     loadForms();
 
-    // 内联提示
+    // Inline notes
     const noteFlow = $('#noteFlow');
     const noteParams = $('#noteParams');
     const noteSubmit = $('#noteSubmit');
@@ -409,7 +413,7 @@
     }
     function hideNote(el){ el.style.display = 'none'; el.textContent = ''; el.classList.remove('success','error','info'); }
 
-    // 保存（流程）
+    // Save (Request Form)
     $('#btnSaveFlow').addEventListener('click', ()=>{
       const F = {};
       let complete=true;
@@ -419,10 +423,10 @@
         if(!v) complete=false;
       });
       state.flow = F; persist();
-      showNote(noteFlow, complete ? 'success' : 'info', complete ? '保存成功' : '已保存（存在空白项）');
+      showNote(noteFlow, complete ? 'success' : 'info', complete ? 'Saved successfully' : 'Saved (some fields are blank)');
     });
 
-    // 保存（参数）
+    // Save (Parameters)
     $('#btnSaveParams').addEventListener('click', ()=>{
       const P = {};
       let complete=true;
@@ -432,7 +436,7 @@
         if(!v) complete=false;
       });
       state.params = P; persist();
-      showNote(noteParams, complete ? 'success' : 'info', complete ? '保存成功' : '已保存（存在空白项）');
+      showNote(noteParams, complete ? 'success' : 'info', complete ? 'Saved successfully' : 'Saved (some fields are blank)');
     });
 
     function gatherMissing(){
@@ -442,21 +446,19 @@
       return missing;
     }
 
-    // 清空表单（新增）
+    // Reset forms (new)
     function resetForms(){
       [...flowIds, ...paramIds].forEach(id=>{
         const el = document.getElementById(id);
         if (!el) return;
-        el.value = ''; // 对于 input/textarea/带有占位项的 select 均可恢复到“请选择…/空”
+        el.value = '';
       });
-      // 清掉保存提示
       hideNote(noteFlow);
       hideNote(noteParams);
     }
 
-    // 发送到 Google Sheets（自动回退 no-cors）
+    // Send to Google Sheets (fallback to no-cors)
     async function recordSubmissionToSheets(payload){
-      // 尝试标准 CORS JSON
       try{
         const res = await fetch(BACKEND_URL, {
           method: 'POST',
@@ -466,7 +468,6 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return true;
       }catch(err){
-        // 回退：no-cors + text/plain（不可读响应，但能送达）
         try{
           await fetch(BACKEND_URL, {
             method: 'POST',
@@ -476,56 +477,50 @@
           });
           return true;
         }catch(e2){
-          console.warn('上报后端失败：', e2);
+          console.warn('Failed to report to backend:', e2);
           return false;
         }
       }
     }
 
-    // 提交
+    // Submit
     $('#btnSubmit').addEventListener('click', async ()=>{
       hideNote(noteSubmit);
 
       const missing = gatherMissing();
       if(missing.length){
-        showNote(noteSubmit, 'error', '信息不全，请继续填写');
+        showNote(noteSubmit, 'error', 'Incomplete information, please continue filling');
         return;
       }
 
-      // 组装数据
       state.flow = Object.fromEntries(flowIds.map(id=>[id, document.getElementById(id).value.trim()]));
       state.params = Object.fromEntries(paramIds.map(id=>[id, document.getElementById(id).value.trim()]));
       const submission = { flow: {...state.flow}, params: {...state.params}, at: new Date().toISOString(), user: state.user };
       state.submission = submission; persist();
 
-      // 本地历史（结果回退用）
       const history = loadLS(HISTORY_KEY, []) || [];
       history.unshift(submission);
       if (history.length > 50) history.length = 50;
       saveLS(HISTORY_KEY, history);
 
-      // 上报后端
       await recordSubmissionToSheets(submission);
 
-      // 成功提示
-      showNote(noteSubmit, 'success', '提交成功！');
+      showNote(noteSubmit, 'success', 'Submitted successfully!');
 
-      // 清空表单与本地表单状态（新增）
       resetForms();
       state.flow = {};
       state.params = {};
-      state.submission = null; // 可选：清空最近一次表单内容的本地快照
+      state.submission = null;
       persist();
 
-      // 若当前在“提交结果”，刷新；否则等用户切换到“提交结果”时加载
       if ($('#panelResults').classList.contains('active')) {
         loadRecentSubmissions();
       }
     });
 
-    // 结果列表渲染
+    // Results rendering
     const resultsContainer = $('#resultsContainer');
-    const resultsSource = $('#resultsSource');
+    const resultsSource = $('#resultsSource';
 
     function escapeHtml(str){
       return String(str)
@@ -541,7 +536,7 @@
       resultsSource.textContent = sourceLabel;
 
       if (!list || !list.length){
-        resultsContainer.innerHTML = '<p class="muted">暂无数据。</p>';
+        resultsContainer.innerHTML = '<p class="muted">No data.</p>';
         return;
       }
 
@@ -552,7 +547,7 @@
         card.innerHTML = `<p><strong>#${idx+1}</strong> — ${at.toLocaleString()}</p>`;
         const tbl = document.createElement('table');
         const thead = document.createElement('thead');
-        thead.innerHTML = '<tr><th>字段</th><th>值</th></tr>';
+        thead.innerHTML = '<tr><th>Field</th><th>Value</th></tr>';
         tbl.appendChild(thead);
         const tbody = document.createElement('tbody');
 
@@ -564,17 +559,23 @@
           'Max Retries','Timeout (ms)','Batch Size','Threshold (%)','Parallel Workers',
           'Region Code','Retry Backoff (ms)','Alert Level','Schedule Hour','Confirmation Code'
         ];
-        const fids = ['flow1','flow2','flow3','flow4','flow5','flow6','flow7','flow8','flow9','flow10'];
-        const pids = ['param1','param2','param3','param4','param5','param6','param7','param8','param9','param10'];
+        const fids = [
+          'request_title','request_type','department','assignee','start_date',
+          'end_date','priority','environment','manager_approval','description'
+        ];
+        const pids = [
+          'max_retries','timeout_ms','batch_size','threshold_pct','parallel_workers',
+          'region_code','retry_backoff_ms','alert_level','schedule_hour','confirmation_code'
+        ];
 
         fids.forEach((id, i)=>{
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td>流程：${labelsFlow[i]}</td><td>${escapeHtml(item.flow?.[id] ?? '')}</td>`;
+          tr.innerHTML = `<td>Form: ${labelsFlow[i]}</td><td>${escapeHtml(item.flow?.[id] ?? '')}</td>`;
           tbody.appendChild(tr);
         });
         pids.forEach((id, i)=>{
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td>参数：${labelsParam[i]}</td><td>${escapeHtml(item.params?.[id] ?? '')}</td>`;
+          tr.innerHTML = `<td>Parameter: ${labelsParam[i]}</td><td>${escapeHtml(item.params?.[id] ?? '')}</td>`;
           tbody.appendChild(tr);
         });
 
@@ -584,13 +585,13 @@
       });
     }
 
-    // 从后端读取最近记录（标准 GET）
+    // Fetch recent records from backend (standard GET)
     async function fetchRecentFromBackend(limit=5){
       const url = `${BACKEND_URL}?mode=recent&limit=${encodeURIComponent(limit)}`;
       const res = await fetch(url, { method:'GET' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      if (!data || !data.ok || !Array.isArray(data.rows)) throw new Error('响应格式异常');
+      if (!data || !data.ok || !Array.isArray(data.rows)) throw new Error('Invalid response format');
       return data.rows;
     }
     function loadRecentFromLocal(limit=5){
@@ -601,17 +602,17 @@
     async function loadRecentSubmissions(){
       try{
         const rows = await fetchRecentFromBackend(5);
-        renderResults(rows, '来源：Google Sheets（实时）');
+        renderResults(rows, 'Source: Google Sheets (Live)');
       }catch(e){
-        console.warn('读取后端失败，使用本地缓存：', e);
+        console.warn('Failed to read backend, using local cache:', e);
         const rows = loadRecentFromLocal(5);
-        renderResults(rows, rows.length ? '来源：本地缓存（后端未读到）' : '来源：暂无数据');
+        renderResults(rows, rows.length ? 'Source: Local cache (backend unavailable)' : 'Source: No data');
       }
     }
 
-    // 地址栏 hash 快捷切换
+    // Hash shortcut for tab switching
     (function initFromHash(){
-      const map = { '#flow':0, '#params':1, '#results':2, '#流程':0, '#参数':1, '#结果':2 };
+      const map = { '#flow':0, '#params':1, '#results':2, '#request':0, '#parameters':1, '#results':2 };
       const idx = map[location.hash.toLowerCase()];
       if (typeof idx === 'number') activateTab(idx);
     })();
