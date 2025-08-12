@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
@@ -127,38 +127,38 @@
       <div class="logo" aria-hidden="true"></div>
       <div>
         <h1>Playwright Codegen Agent Test</h1>
-        <small class="muted">Static demo site (inline tips + Google Sheets backend)</small>
+        <small class="muted">Static demo (inline messages + Google Sheets backend)</small>
       </div>
     </div>
     <div class="right">
-      <span id="userPill" class="user-pill" data-testid="user-display" aria-live="polite">Not logged in</span>
-      <button class="btn" id="btnAuth" data-testid="btn-auth">Register / Login</button>
+      <span id="userPill" class="user-pill" data-testid="user-display" aria-live="polite">Not signed in</span>
+      <button class="btn" id="btnAuth" data-testid="btn-auth">Sign up / Sign in</button>
     </div>
   </header>
 
   <div class="container">
     <aside>
       <div class="nav" role="tablist" aria-label="Main sections">
-        <button class="tab active" id="tabFlow" role="tab" aria-selected="true" aria-controls="panelFlow" data-testid="tab-flow">Request Form</button>
+        <button class="tab active" id="tabFlow" role="tab" aria-selected="true" aria-controls="panelFlow" data-testid="tab-flow">Flow Entry</button>
         <button class="tab" id="tabParams" role="tab" aria-selected="false" aria-controls="panelParams" data-testid="tab-params">Parameter Settings</button>
         <button class="tab" id="tabResults" role="tab" aria-selected="false" aria-controls="panelResults" data-testid="tab-results">Submission Results</button>
       </div>
     </aside>
 
     <main>
-      <!-- 流程填写 -->
+      <!-- Flow Entry -->
       <section class="section active" id="panelFlow" role="tabpanel" aria-labelledby="tabFlow">
-        <h2>Request Form</h2>
-        <p class="muted">Fill in all fields and click "Save".</p>
+        <h2>Flow Entry</h2>
+        <p class="muted">Fill all fields below, then click Save.</p>
         <div class="grid">
           <div class="field">
-            <label for="flow_request_title">Request Title</label>
-            <input id="flow_request_title" data-testid="flow-field-1" placeholder="Please enter title" required />
+            <label for="flow1">Request Title</label>
+            <input id="flow1" data-testid="flow-field-1" placeholder="Enter title" required />
           </div>
           <div class="field">
-            <label for="flow_request_type">Request Type</label>
-            <select id="flow_request_type" data-testid="flow-field-2" required>
-              <option value="">Please select type...</option>
+            <label for="flow2">Request Type</label>
+            <select id="flow2" data-testid="flow-field-2" required>
+              <option value="">Select…</option>
               <option>Onboarding</option>
               <option>Offboarding</option>
               <option>Access</option>
@@ -166,9 +166,9 @@
             </select>
           </div>
           <div class="field">
-            <label for="flow_department">Department</label>
-            <select id="flow_department" data-testid="flow-field-3" required>
-              <option value="">Please select department...</option>
+            <label for="flow3">Department</label>
+            <select id="flow3" data-testid="flow-field-3" required>
+              <option value="">Select…</option>
               <option>Engineering</option>
               <option>Sales</option>
               <option>HR</option>
@@ -177,21 +177,21 @@
             </select>
           </div>
           <div class="field">
-            <label for="flow_assignee">Assignee</label>
-            <input id="flow_assignee" data-testid="flow-field-4" placeholder="e.g. Jane Doe" required />
+            <label for="flow4">Assignee</label>
+            <input id="flow4" data-testid="flow-field-4" placeholder="e.g., Jane Doe" required />
           </div>
           <div class="field">
-            <label for="flow_start_date">Start Date</label>
-            <input id="flow_start_date" type="date" data-testid="flow-field-5" required />
+            <label for="flow5">Start Date</label>
+            <input id="flow5" type="date" data-testid="flow-field-5" required />
           </div>
           <div class="field">
-            <label for="flow_end_date">End Date</label>
-            <input id="flow_end_date" type="date" data-testid="flow-field-6" required />
+            <label for="flow6">End Date</label>
+            <input id="flow6" type="date" data-testid="flow-field-6" required />
           </div>
           <div class="field">
-            <label for="flow_priority">Priority</label>
-            <select id="flow_priority" data-testid="flow-field-7" required>
-              <option value="">Please select priority...</option>
+            <label for="flow7">Priority</label>
+            <select id="flow7" data-testid="flow-field-7" required>
+              <option value="">Select…</option>
               <option>Low</option>
               <option>Medium</option>
               <option>High</option>
@@ -199,9 +199,9 @@
             </select>
           </div>
           <div class="field">
-            <label for="flow_environment">Environment</label>
-            <select id="flow_environment" data-testid="flow-field-8" required>
-              <option value="">Please select environment...</option>
+            <label for="flow8">Environment</label>
+            <select id="flow8" data-testid="flow-field-8" required>
+              <option value="">Select…</option>
               <option>DEV</option>
               <option>QA</option>
               <option>STAGE</option>
@@ -209,16 +209,16 @@
             </select>
           </div>
           <div class="field">
-            <label for="flow_approval">Requires Manager Approval</label>
-            <select id="flow_approval" data-testid="flow-field-9" required>
-              <option value="">Please select approval...</option>
+            <label for="flow9">Requires Manager Approval</label>
+            <select id="flow9" data-testid="flow-field-9" required>
+              <option value="">Select…</option>
               <option>Yes</option>
               <option>No</option>
             </select>
           </div>
           <div class="field" style="grid-column:1/-1">
-            <label for="flow_description">Description</label>
-            <textarea id="flow_description" data-testid="flow-field-10" placeholder="Please enter description…" required></textarea>
+            <label for="flow10">Description</label>
+            <textarea id="flow10" data-testid="flow-field-10" placeholder="Enter details…" required></textarea>
           </div>
         </div>
         <div class="actions">
@@ -227,31 +227,31 @@
         <div id="noteFlow" class="note" style="display:none" data-testid="msg-flow-save" aria-live="polite"></div>
       </section>
 
-      <!-- 参数设置 -->
+      <!-- Parameter Settings -->
       <section class="section" id="panelParams" role="tabpanel" aria-labelledby="tabParams">
         <h2>Parameter Settings</h2>
-        <p class="muted">Fill in all parameters and click "Save", then click "Submit".</p>
+        <p class="muted">Fill parameters, click Save, then Submit.</p>
         <div class="grid">
           <div class="field">
             <label for="param1">Max Retries (0–10)</label>
-            <input id="param1" type="number" min="0" max="10" step="1" data-testid="param-field-1" placeholder="e.g. 3" required />
+            <input id="param1" type="number" min="0" max="10" step="1" data-testid="param-field-1" placeholder="e.g., 3" required />
           </div>
           <div class="field">
             <label for="param2">Timeout (ms)</label>
-            <input id="param2" type="number" min="0" step="100" data-testid="param-field-2" placeholder="e.g. 10000" required />
+            <input id="param2" type="number" min="0" step="100" data-testid="param-field-2" placeholder="e.g., 10000" required />
           </div>
           <div class="field">
             <label for="param3">Batch Size</label>
-            <input id="param3" type="number" min="1" step="1" data-testid="param-field-3" placeholder="e.g. 50" required />
+            <input id="param3" type="number" min="1" step="1" data-testid="param-field-3" placeholder="e.g., 50" required />
           </div>
           <div class="field">
             <label for="param4">Threshold (%)</label>
-            <input id="param4" type="number" min="0" max="100" step="1" data-testid="param-field-4" placeholder="e.g. 80" required />
+            <input id="param4" type="number" min="0" max="100" step="1" data-testid="param-field-4" placeholder="e.g., 80" required />
           </div>
           <div class="field">
             <label for="param5">Parallel Workers</label>
             <select id="param5" data-testid="param-field-5" required>
-              <option value="">Please select workers...</option>
+              <option value="">Select…</option>
               <option>1</option><option>2</option><option>3</option><option>4</option>
               <option>5</option><option>6</option><option>7</option><option>8</option>
               <option>9</option><option>10</option>
@@ -260,33 +260,33 @@
           <div class="field">
             <label for="param6">Region Code</label>
             <select id="param6" data-testid="param-field-6" required>
-              <option value="">Please select code...</option>
+              <option value="">Select…</option>
               <option>1</option><option>2</option><option>3</option>
             </select>
           </div>
           <div class="field">
             <label for="param7">Retry Backoff (ms)</label>
-            <input id="param7" type="number" min="0" step="100" data-testid="param-field-7" placeholder="e.g. 2000" required />
+            <input id="param7" type="number" min="0" step="100" data-testid="param-field-7" placeholder="e.g., 2000" required />
           </div>
           <div class="field">
             <label for="param8">Alert Level</label>
             <select id="param8" data-testid="param-field-8" required>
-              <option value="">Please select level...</option>
+              <option value="">Select…</option>
               <option>0</option><option>1</option><option>2</option><option>3</option>
             </select>
           </div>
           <div class="field">
             <label for="param9">Schedule Hour (0–23)</label>
             <select id="param9" data-testid="param-field-9" required>
-              <option value="">Please select hour...</option>
+              <option value="">Select…</option>
               <script>
-                // 稍后由 JS 填充 0-23
+                // populated by JS (0..23)
               </script>
             </select>
           </div>
           <div class="field">
             <label for="param10">Confirmation Code</label>
-            <input id="param10" type="number" step="1" data-testid="param-field-10" placeholder="e.g. 123456" required />
+            <input id="param10" type="number" step="1" data-testid="param-field-10" placeholder="e.g., 123456" required />
           </div>
         </div>
         <div class="actions">
@@ -296,13 +296,13 @@
         <div id="noteParams" class="note" style="display:none" data-testid="msg-params-save" aria-live="polite"></div>
         <div id="noteSubmit" class="note" style="display:none" data-testid="msg-submit" aria-live="polite"></div>
         <div class="divider"></div>
-        <p class="muted">Tip: If there are blank fields, "Incomplete information, please continue filling" will be shown.</p>
+        <p class="muted">Tip: If any field is empty, you will see “Information incomplete, please continue filling”.</p>
       </section>
 
-      <!-- 提交结果 -->
+      <!-- Submission Results -->
       <section class="section" id="panelResults" role="tabpanel" aria-labelledby="tabResults">
         <h2>Submission Results</h2>
-        <p class="muted">Shows the latest 5 records from Google Sheets (fallback to local cache if backend is unavailable).</p>
+        <p class="muted">Shows the latest 5 records from Google Sheets (falls back to local cache if unavailable).</p>
         <p><span class="chip" id="resultsSource" data-testid="results-source">Loading…</span></p>
         <div id="resultsContainer" data-testid="results-container"></div>
       </section>
@@ -310,17 +310,17 @@
   </div>
 
   <script>
-    // ============ 基础工具 ============
+    // ============ Helpers ============
     const $ = (sel, ctx=document)=>ctx.querySelector(sel);
     const $$ = (sel, ctx=document)=>Array.from(ctx.querySelectorAll(sel));
 
-    // 你的 Apps Script Web App URL（请在更换部署版本后同步更新）
-    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyJuc5kD6ysXYfGRzbDgoQ_jCe3OOq8NTRIXGAxIkJ02tdRwszUjL-OyeYIA5_BMCNp/exec';
+    // Your Apps Script Web App URL
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyFBLkQTAeIlWpoMIz--OK6H5A2czk7tYkJp_BA_X81s_AZ2BeO9UNv5nqGDyonmgVx/exec';
 
     const STATE_KEY   = 'pw-demo-state';
-    const HISTORY_KEY = 'pw-demo-history'; // 用于回退显示最近记录
+    const HISTORY_KEY = 'pw-demo-history'; // fallback source
 
-    // 简易登录（演示用）
+    // Simple demo auth
     const userPill = $('#userPill');
     const btnAuth = $('#btnAuth');
     let signedIn = false;
@@ -331,24 +331,27 @@
 
     (function restore(){
       const saved = loadLS(STATE_KEY, null);
-      if (saved) state = saved;
+      if (saved) {
+        state = saved;
+        if (state.user) signedIn = true;
+      }
     })();
 
     function updateUserUI(){
       if(signedIn && state.user){
-        userPill.textContent = `Logged in: ${state.user.name}`;
-        btnAuth.textContent = 'Logout';
+        userPill.textContent = `Signed in: ${state.user.name}`;
+        btnAuth.textContent = 'Sign out';
         btnAuth.classList.add('danger');
       }else{
-        userPill.textContent = 'Not logged in';
-        btnAuth.textContent = 'Register / Login';
+        userPill.textContent = 'Not signed in';
+        btnAuth.textContent = 'Sign up / Sign in';
         btnAuth.classList.remove('danger');
       }
     }
     btnAuth.addEventListener('click', ()=>{
       if(!signedIn){
-        const name = prompt('Please enter your name','User');
-        const email = prompt('Please enter your email','user@example.com');
+        const name = prompt('Enter your name (demo login)','User');
+        const email = prompt('Enter your email','user@example.com');
         if(name && email){ state.user = { name, email }; signedIn = true; persist(); updateUserUI(); }
       }else{
         signedIn = false; state.user = null; persist(); updateUserUI();
@@ -356,7 +359,7 @@
     });
     updateUserUI();
 
-    // 填充小时 0..23
+    // Populate hours 0..23
     (function populateHours(){
       const sel = $('#param9');
       if (!sel) return;
@@ -369,7 +372,7 @@
       sel.appendChild(frag);
     })();
 
-    // 选项卡
+    // Tabs
     const tabs = [
       {btn: $('#tabFlow'), panel: $('#panelFlow')},
       {btn: $('#tabParams'), panel: $('#panelParams')},
@@ -385,7 +388,7 @@
     }
     tabs.forEach((t,i)=> t.btn.addEventListener('click', ()=>activateTab(i)));
 
-    // 表单加载/保存
+    // Form state
     const flowIds = ['flow1','flow2','flow3','flow4','flow5','flow6','flow7','flow8','flow9','flow10'];
     const paramIds = ['param1','param2','param3','param4','param5','param6','param7','param8','param9','param10'];
 
@@ -397,7 +400,7 @@
     function persist(){ saveLS(STATE_KEY, state); }
     loadForms();
 
-    // 内联提示
+    // Inline notes
     const noteFlow = $('#noteFlow');
     const noteParams = $('#noteParams');
     const noteSubmit = $('#noteSubmit');
@@ -409,7 +412,7 @@
     }
     function hideNote(el){ el.style.display = 'none'; el.textContent = ''; el.classList.remove('success','error','info'); }
 
-    // 保存（流程）
+    // Save (Flow)
     $('#btnSaveFlow').addEventListener('click', ()=>{
       const F = {};
       let complete=true;
@@ -419,10 +422,10 @@
         if(!v) complete=false;
       });
       state.flow = F; persist();
-      showNote(noteFlow, complete ? 'success' : 'info', complete ? 'Saved successfully' : 'Saved (some fields are blank)');
+      showNote(noteFlow, complete ? 'success' : 'info', complete ? 'Saved successfully.' : 'Saved (some fields are empty).');
     });
 
-    // 保存（参数）
+    // Save (Params)
     $('#btnSaveParams').addEventListener('click', ()=>{
       const P = {};
       let complete=true;
@@ -432,7 +435,7 @@
         if(!v) complete=false;
       });
       state.params = P; persist();
-      showNote(noteParams, complete ? 'success' : 'info', complete ? 'Saved successfully' : 'Saved (some fields are blank)');
+      showNote(noteParams, complete ? 'success' : 'info', complete ? 'Saved successfully.' : 'Saved (some fields are empty).');
     });
 
     function gatherMissing(){
@@ -442,21 +445,19 @@
       return missing;
     }
 
-    // 清空表单（新增）
+    // Reset forms after successful submit
     function resetForms(){
       [...flowIds, ...paramIds].forEach(id=>{
         const el = document.getElementById(id);
         if (!el) return;
-        el.value = ''; // 对于 input/textarea/带有占位项的 select 均可恢复到“请选择…/空”
+        el.value = '';
       });
-      // 清掉保存提示
       hideNote(noteFlow);
       hideNote(noteParams);
     }
 
-    // 发送到 Google Sheets（自动回退 no-cors）
+    // Send to Google Sheets (fallback to no-cors)
     async function recordSubmissionToSheets(payload){
-      // 尝试标准 CORS JSON
       try{
         const res = await fetch(BACKEND_URL, {
           method: 'POST',
@@ -466,7 +467,6 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return true;
       }catch(err){
-        // 回退：no-cors + text/plain（不可读响应，但能送达）
         try{
           await fetch(BACKEND_URL, {
             method: 'POST',
@@ -476,54 +476,54 @@
           });
           return true;
         }catch(e2){
-          console.warn('Failed to report to backend:', e2);
+          console.warn('Failed to post to backend:', e2);
           return false;
         }
       }
     }
 
-    // 提交
+    // Submit
     $('#btnSubmit').addEventListener('click', async ()=>{
       hideNote(noteSubmit);
 
       const missing = gatherMissing();
       if(missing.length){
-        showNote(noteSubmit, 'error', 'Incomplete information, please continue filling');
+        showNote(noteSubmit, 'error', 'Information incomplete, please continue filling');
         return;
       }
 
-      // 组装数据
+      // Build payload
       state.flow = Object.fromEntries(flowIds.map(id=>[id, document.getElementById(id).value.trim()]));
       state.params = Object.fromEntries(paramIds.map(id=>[id, document.getElementById(id).value.trim()]));
       const submission = { flow: {...state.flow}, params: {...state.params}, at: new Date().toISOString(), user: state.user };
       state.submission = submission; persist();
 
-      // 本地历史（结果回退用）
+      // Local history for fallback
       const history = loadLS(HISTORY_KEY, []) || [];
       history.unshift(submission);
       if (history.length > 50) history.length = 50;
       saveLS(HISTORY_KEY, history);
 
-      // 上报后端
+      // Send
       await recordSubmissionToSheets(submission);
 
-      // 成功提示
-      showNote(noteSubmit, 'success', 'Submitted successfully!');
+      // Success message
+      showNote(noteSubmit, 'success', 'Submission successful!');
 
-      // 清空表单与本地表单状态（新增）
+      // Clear forms and local form state
       resetForms();
       state.flow = {};
       state.params = {};
-      state.submission = null; // 可选：清空最近一次表单内容的本地快照
+      state.submission = null;
       persist();
 
-      // 若当前在“提交结果”，刷新；否则等用户切换到“提交结果”时加载
+      // Refresh results if visible
       if ($('#panelResults').classList.contains('active')) {
         loadRecentSubmissions();
       }
     });
 
-    // 结果列表渲染
+    // Results
     const resultsContainer = $('#resultsContainer');
     const resultsSource = $('#resultsSource');
 
@@ -541,7 +541,7 @@
       resultsSource.textContent = sourceLabel;
 
       if (!list || !list.length){
-        resultsContainer.innerHTML = '<p class="muted">暂无数据。</p>';
+        resultsContainer.innerHTML = '<p class="muted">No data yet.</p>';
         return;
       }
 
@@ -569,12 +569,12 @@
 
         fids.forEach((id, i)=>{
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td>Form：${labelsFlow[i]}</td><td>${escapeHtml(item.flow?.[id] ?? '')}</td>`;
+          tr.innerHTML = `<td>Flow: ${labelsFlow[i]}</td><td>${escapeHtml(item.flow?.[id] ?? '')}</td>`;
           tbody.appendChild(tr);
         });
         pids.forEach((id, i)=>{
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td>Parameter: ${labelsParam[i]}</td><td>${escapeHtml(item.params?.[id] ?? '')}</td>`;
+          tr.innerHTML = `<td>Param: ${labelsParam[i]}</td><td>${escapeHtml(item.params?.[id] ?? '')}</td>`;
           tbody.appendChild(tr);
         });
 
@@ -584,13 +584,13 @@
       });
     }
 
-    // 从后端读取最近记录（标准 GET）
+    // Fetch recent from backend
     async function fetchRecentFromBackend(limit=5){
       const url = `${BACKEND_URL}?mode=recent&limit=${encodeURIComponent(limit)}`;
       const res = await fetch(url, { method:'GET' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      if (!data || !data.ok || !Array.isArray(data.rows)) throw new Error('响应格式异常');
+      if (!data || !data.ok || !Array.isArray(data.rows)) throw new Error('Unexpected response');
       return data.rows;
     }
     function loadRecentFromLocal(limit=5){
@@ -601,17 +601,17 @@
     async function loadRecentSubmissions(){
       try{
         const rows = await fetchRecentFromBackend(5);
-        renderResults(rows, 'Source: Google Sheets (Live)');
+        renderResults(rows, 'Source: Google Sheets (live)');
       }catch(e){
-        console.warn('Failed to read backend, using local cache:', e);
+        console.warn('Failed to fetch backend, using local cache:', e);
         const rows = loadRecentFromLocal(5);
-        renderResults(rows, rows.length ? 'Source: Local cache (backend unavailable)' : 'Source: No data available');
+        renderResults(rows, rows.length ? 'Source: Local cache (backend unavailable)' : 'Source: No data');
       }
     }
 
-    // 地址栏 hash 快捷切换
+    // Hash-based tab
     (function initFromHash(){
-      const map = { '#flow':0, '#params':1, '#results':2, '#request':0, '#parameters':1, '#results':2 };
+      const map = { '#flow':0, '#params':1, '#results':2 };
       const idx = map[location.hash.toLowerCase()];
       if (typeof idx === 'number') activateTab(idx);
     })();
